@@ -1,0 +1,46 @@
+{% extends 'shared/_MainLayout.html' %}
+
+{% block content %}
+    	<div class="container">
+		<section id="form"><!--form-->
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="signup-form"><!--sign up form-->
+						<h2>ثبت نام کاربـر جدیـد</h2>
+						<form  method="post">
+                            {% csrf_token %}
+                            <label for="{{ registerform.username.id_for_label }}">{{ registerform.username.label }}</label>
+                            {{ registerform.username }}
+                            {% for i in registerform.username.errors %}
+                               <p class="text-danger"  style="font-size: 13px">* {{ i }}</p>
+                            {% endfor %}
+
+                            <label for="{{ registerform.email.id_for_label }}">{{ registerform.email.label }}</label>
+                            {{ registerform.email }}
+                            {% for i in registerform.email.errors %}
+                               <p class="text-danger"  style="font-size: 13px">* {{ i }}</p>
+                            {% endfor %}
+
+                            <label for="{{ registerform.password.id_for_label }}">{{ registerform.password.label }}</label>
+                            {{ registerform.password }}
+                            {% for i in registerform.password.errors %}
+                               <p class="text-danger"  style="font-size: 13px">* {{ i }}</p>
+                            {% endfor %}
+
+                            <label for="{{ registerform.re_password.id_for_label }}">{{ registerform.re_password.label }}</label>
+                            {{ registerform.re_password }}
+                            {% for i in registerform.re_password.errors %}
+                               <p class="text-danger"  style="font-size: 13px">* {{ i }}</p>
+                            {% endfor %}
+							<button type="submit" class="btn btn-default">ثبت نام</button>
+                            <div style="margin-top: 10px">
+                                <p>حساب کاربری دارید؟ <a href="{% url 'login' %}" class="text-link" >وارد حسابتان شوید</a></p>
+                            </div>
+						</form>
+					</div><!--/sign up form-->
+				</div>
+			</div>
+		</section>
+	</div>
+	<!--/form-->
+{% endblock %}
