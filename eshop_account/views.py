@@ -3,8 +3,6 @@ from django.contrib.auth import login,logout,authenticate,get_user_model
 from .forms import *
 from django.contrib.auth.models import User # or: User=get_user_model()
 
-
-# Create your views here.
 def login_user(request):
     if request.user.is_authenticated:
         return redirect('/')
@@ -23,7 +21,6 @@ def login_user(request):
         else:
             loginform.add_error('password','رمز عبور اشتباه است!!')
     return render(request,'account/login.html',context)
-
 
 def register_user(request):
     if request.user.is_authenticated:

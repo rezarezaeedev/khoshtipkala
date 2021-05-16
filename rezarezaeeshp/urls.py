@@ -26,8 +26,6 @@ urlpatterns = [
     path('header', header, name='header'),
     path('footer', footer, name='footer'),
     path('admin/', admin.site.urls),
-    path('admin/', admin.site.urls),
-
 ]
 
 

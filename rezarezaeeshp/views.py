@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from eshop_account.models import *
 
 def header(request, *args, **kwargs):
     contect={
@@ -15,5 +16,6 @@ def footer(request, *args, **kwargs):
 def home(request):
     context={
         'data':'new data',
+        'pr':Product.objects.all(),
     }
     return render(request, 'homepage.html', context)
