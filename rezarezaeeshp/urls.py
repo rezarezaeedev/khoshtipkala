@@ -23,6 +23,7 @@ from .views import *
 urlpatterns = [
     path('', home, name='home'),
     path('', include('eshop_account.urls')),
+    path('', include('eshop_products.urls')),
     path('header', header, name='header'),
     path('footer', footer, name='footer'),
     path('admin/', admin.site.urls),
