@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 from .models import *
@@ -17,9 +18,14 @@ class ProductsList(ListView):
 
 
 def product_detail(request, *args, **kwargs): # or...(request, slug):
-    slug=kwargs['slug']
+    objid=kwargs['objid']
     title=kwargs['title']
-    product = get_object_or_404(Product,slug=slug, active=True,title=title)
+    try:
+        product = Product.objects.get(objid=objid,title=title, active=True)
+    except Product.DoesNotExist:
+        return render(request, '404_error.html')
+    except:
+        return Http404('--Bad error')
     context = {
         'product':product,
     }
