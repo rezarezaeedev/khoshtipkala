@@ -2,8 +2,8 @@ from django.contrib import admin
 from .models import *
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'size', 'price', 'active']
-    list_per_page = 4
+    list_display = ['title','gender', 'size',  'price', 'active']
+    list_per_page = 10
 
     class Meta:
         model = Product

@@ -64,10 +64,10 @@
 									</span>
 								</div>
 								<div>
-                                    {% if product.active %}
-                                      <span><b>موجـودی :</b><p style="color: green;display: inline"> در انبـار موجود می باشد</p></span>
+                                    {% if product.beExist == 'True' %}
+                                        <span><b>موجـودی :</b><p style="color: green;text-shadow: 0px 0px 10px #87f687;display: inline"> در انبـار موجود می باشد</p></span>
                                         {% else %}
-                                           <span><b>موجـودی :</b><p style="color: red;display: inline"> در انبـار موجود می باشد</p></span>
+                                        <span><b>موجـودی :</b><p style="color: red;text-shadow: 0px 0px 10px #ff9b9b;display: inline"> در انبـار موجود نمی باشد</p></span>
                                     {% endif %}
 									<p><b>شرایـط :</b> جدیـد</p>
 									<p><b>برنـد :</b> برنـد </p>
