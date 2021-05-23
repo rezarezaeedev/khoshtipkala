@@ -21,25 +21,15 @@
 							<div id="similar-product" class="carousel slide" data-ride="carousel">
 
 								  <!-- Wrapper for slides -->
-								    <div class="carousel-inner">
-										<div class="item active left">
-										  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-										  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-										  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
-										</div>
-										<div class="item next left">
-										  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-										  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-										  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
-										</div>
-										<div class="item">
-										  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-										  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-										  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
-										</div>
-
-									</div>
-
+                                  <div class="carousel-inner">
+                                      {% for gallery_list in product_gallery %}
+                                          <div class="item {{ forloop.first|yesno:"active," }}">
+                                              {% for gallery in gallery_list %}
+                                                  <a href=""><img src="{{ gallery.image.url }}" alt="{{ gallery.title }} " style="width: 85px;height: 90px"></a>
+                                              {% endfor %}
+                                          </div>
+                                      {% endfor %}
+                                  </div>
 								  <!-- Controls -->
 								  <a class="right item-control" href="#similar-product" data-slide="next">
 									<i class="fa fa-angle-right"></i>
@@ -83,24 +73,25 @@
 
 
 
-									<p><b>شرایـط :</b> جدیـد</p>
-									<p><b>برنـد :</b> برنـد </p>
+									<p><b>فروشنده :</b> {{ product.seller.shopName   }}</p>
+									<p><b>برنـد :</b> {{ product.brand.title }} </p>
+									<p><b>دوختِ :</b> {{ product.brand.country }} </p>
 								</div>
 								<span class="socials-share share">
 									<ul>
-										<a href="#">
+										<a href="https://t.me/{{ product.seller.telegram }}">
 											<li>
-												<label>بلـه</label>
-												<img src="{% static 'images/product-details/Bale.png' %}">
+												<label>تلگرام</label>
+												<img src="{% static 'images/product-details/Telegram.png' %}">
 											</li>
 										</a>
-										<a href="#">
+										<a href="https://t.me/{{ product.seller.soroush }}">
 											<li>
 												<label>سـروش</label>
 												<img src="{% static 'images/product-details/Soroush.png' %}">
 											</li>
 										</a>
-										<a href="#">
+										<a href="https://instagram.com/{{ product.seller.instagram }}">
 											<li>
 												<label>اینستاگرام</label>
 												<img src="{% static 'images/product-details/Instagram.png' %}">
@@ -348,19 +339,7 @@
 				<div class="col-sm-3">
 					<div class="left-sidebar">
                             {% render_partial 'CategoryList_partial' %}
-
-						<div class="brands_products"><!--brands_products-->
-							<h2>برنـد ها</h2>
-							<div class="brands-name">
-								<ul class="nav nav-pills nav-stacked">
-									<li><a href=""> <span class="pull-left">(50)</span>برنـد 1</a></li>
-									<li><a href=""> <span class="pull-left">(56)</span>برنـد 2</a></li>
-									<li><a href=""> <span class="pull-left">(27)</span>برنـد 3</a></li>
-									<li><a href=""> <span class="pull-left">(32)</span>برنـد 4</a></li>
-									<li><a href=""> <span class="pull-left">(5)</span>برنـد 5</a></li>
-								</ul>
-							</div>
-						</div><!--/brands_products-->
+                            {% render_partial 'BrandList_partial' %}
 
 						<div class="price-range"><!--price-range-->
 							<h2>فیلتـر قیمـت</h2>

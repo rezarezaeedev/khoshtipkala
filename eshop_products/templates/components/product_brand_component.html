@@ -1,0 +1,19 @@
+<style>
+    #barndLink:hover{
+        color: orange;
+    }
+</style>
+
+<div class="brands_products"><!--brands_products-->
+    <h2>برنـد ها</h2>
+    <div class="brands-name">
+        <ul class="nav nav-pills nav-stacked">
+        <li><a  id="barndLink" href="/products"> همه</a></li>
+            {% for brand in brands %}
+                 <li><a  id="barndLink" href="/products/barnd/{{ brand.slug }}"> {{ brand.title }}</a></li>
+
+            {% endfor %}
+
+        </ul>
+    </div>
+</div><!--/brands_products-->

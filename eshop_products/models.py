@@ -1,5 +1,8 @@
 from django.core import validators
 import os, time
+
+from eshop_brands.models import Brand
+from eshop_seller.models import Seller
 from .utils import get_unique_string_id
 from django.urls import reverse
 from eshop_tag.models import Tag
@@ -15,6 +18,14 @@ def upload_image_path(instance, filepath):
     name, ext=get_name_extention(filepath)
     Time=f'{time.gmtime().tm_hour}-{time.gmtime().tm_min}-{time.gmtime().tm_sec}'
     base_directory='products'
+    final_name=f'{Time}-{instance.title}{ext}'
+    final_path_and_name=os.path.join(base_directory, final_name)
+    return final_path_and_name
+
+def upload_gallery_image_path(instance, filepath):
+    name, ext=get_name_extention(filepath)
+    Time=f'{time.gmtime().tm_hour}-{time.gmtime().tm_min}-{time.gmtime().tm_sec}'
+    base_directory='products/gallery'
     final_name=f'{Time}-{instance.title}{ext}'
     final_path_and_name=os.path.join(base_directory, final_name)
     return final_path_and_name
@@ -46,8 +57,10 @@ class Product(models.Model):
         notExist    =   False,  ('نا موجود')
 
     objects=ProductManager()
+    seller      =   models.ForeignKey(Seller,on_delete=models.DO_NOTHING,verbose_name='فروشنده')
     objid       =   models.CharField(max_length=10,editable=False)
     title       =   models.CharField(max_length=120, verbose_name='عنوان')
+    brand       =   models.ForeignKey(Brand,verbose_name='برند محصول',on_delete=models.DO_NOTHING,)
     gender      =   models.CharField(choices=clothesGender.choices,max_length=10,default=clothesGender.Men,verbose_name='برای')
     size        =   models.CharField(choices=clothesSize.choices,default=clothesSize.Medium,blank=False,null=False,max_length=10, verbose_name='سایز لباس')
     desc        =   models.TextField(verbose_name='توضیحات')
@@ -68,6 +81,18 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('productdetail', kwargs={'objid':self.objid,'title':self.title.replace(' ','-')})
+
+class ProductGallery(models.Model):
+    title = models.CharField(max_length=150,verbose_name='عنوان')
+    image = models.ImageField(upload_to=upload_gallery_image_path, verbose_name='تصویر')
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,verbose_name='متعلق به')
+
+    class Meta:
+        verbose_name='تصویر'
+        verbose_name_plural='تصاویر'
+
+    def __str__(self):
+        return self.title
 
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
     if instance.objid=='':

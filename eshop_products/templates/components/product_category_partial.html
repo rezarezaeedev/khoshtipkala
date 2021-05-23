@@ -14,8 +14,10 @@
       {% for category in object_list %}
           <div class="panel panel-default">
               <div class="panel-heading">
-                <h4 class="panel-title"><a id="categoryLink" href="/products/{{ category.slug }}">{{ category }}</a></h4>
+                <h4 class="panel-title"><a id="categoryLink" href="/products/category/{{ category.slug }}">{{ category }}</a></h4>
               </div>
           </div>
       {% endfor %}
 </div><!--/category-productsr-->
+
+
