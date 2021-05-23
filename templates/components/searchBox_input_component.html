@@ -1,0 +1,67 @@
+<style>
+    #searchCleanerButton:hover ,#searchBoxSubmiter:hover{
+
+        background-color: #e59a03;
+    }
+
+    #searchCleanerButton{
+        background-color: orange;
+        margin: 3px;
+        display: inline-block;height: inherit;
+        color: white;
+        text-decoration: none;
+        padding: 7px 5px;
+        border-radius: 4px
+    }
+
+    #searchCleanerButton:active, #searchBoxSubmiter:active{
+        background-color: #c68514;
+    }
+
+
+    #searchBoxSubmiter{
+        background-color: orange;
+        margin: 3px;
+        display: inline-block;
+        height: inherit;
+        color: white;
+        text-decoration: none;
+        padding: 7px 5px;
+        border-radius: 4px
+    }
+
+    #searchBoxSubmiter{
+        background-color: orange;
+        margin: 3px;
+        outline: none;
+        border: none;
+        width: 83%;
+        height: 30px;
+
+
+    }
+
+
+</style>
+<div class="col-sm-3">
+    <div class="search_box pull-left">
+        <form action="/products/search" method="get" id="searchBoxForm">
+            <input id="searchBox" type="text" placeholder="جستـجو" value="{{ request.GET.query }}" name="query"/>
+             <a onclick="searchBoxCleaner()" id="searchCleanerButton"> X </a>
+            <button  id="searchBoxSubmiter" onclick="searchBoxSubmit()">برو</button>
+        </form>
+        <script>
+
+                function searchBoxSubmit(){
+                document.getElementById("searchBoxForm").submit();
+                }
+            function searchBoxCleaner()
+                {
+                    document.getElementById('searchBox').value='';
+                    searchBoxSubmit();
+                }
+
+        </script>
+
+    </div>
+</div><br>

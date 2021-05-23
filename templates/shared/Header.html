@@ -1,4 +1,6 @@
 {% load static %}
+{% url 'home' as home_url %}
+{% url 'products' as products_url %}
 	<header id="header"><!--header-->
 		<div class="header_top"><!--header_top-->
 			<div class="container">
@@ -66,13 +68,7 @@
 		<div class="header-bottom"><!--header-bottom-->
 			<div class="container">
 				<div class="row">
-
-					<div class="col-sm-3">
-						<div class="search_box pull-left">
-							<input type="text" placeholder="جستـجو"/>
-						</div>
-					</div>
-
+                    {% include 'components/searchBox_input_component.html' %}
 					<div class="col-sm-9">
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -84,16 +80,8 @@
 						</div>
 						<div class="mainmenu pull-right">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="{% url 'home' %}" class="active">خـانه</a></li>
-								<li class="dropdown"><a href="#">فروشگـاه<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="{% url 'products' %}">محصولات</a></li>
-										<li><a href="product-details.html">جزئیات محصولات</a></li>
-										<li><a href="checkout.html">پرداخت</a></li>
-										<li><a href="cart.html">سبـد خریـد</a></li>
-
-                                    </ul>
-                                </li>
+								<li><a href="{{home_url}}" class="{% if request.path == home_url %}active{% endif %}">خـانه</a></li>
+								<li><a href="{{products_url}}" class="{% if request.path == products_url %}active{% endif %}">محصولات</a></li>
 								<li class="dropdown"><a href="#">اخبـار<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="blog.html">آخریـن اخبـار</a></li>

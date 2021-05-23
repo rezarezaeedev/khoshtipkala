@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from eshop_sliders.models import *
 
 def header(request, *args, **kwargs):
     contect={
@@ -13,7 +14,8 @@ def footer(request, *args, **kwargs):
     return render(request, 'shared/Footer.html', context)
 
 def home(request):
+    slider=Slide.objects.all()
     context={
-        'data':'new data',
+        'slider':slider,
     }
     return render(request, 'homepage.html', context)

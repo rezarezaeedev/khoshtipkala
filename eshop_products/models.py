@@ -1,10 +1,10 @@
 from django.core import validators
-from django.db import models
-import os
-import time
-from django.db.models.signals import pre_save
-from .utils import *
+import os, time
+from .utils import get_unique_string_id
 from django.urls import reverse
+from eshop_tag.models import Tag
+from django.db import models
+from eshop_products_category.models import ProductCategory
 
 def get_name_extention(filepath):
     basename    =   os.path.basename(filepath)
@@ -36,12 +36,10 @@ class Product(models.Model):
         baby      =   'baby',  ('نوزاد')
         all       =   'all',   ('تمامی سایز ها')
 
-
     class clothesGender(models.TextChoices):
         Men       =    'men',  ('آقایان')
         Women     =    'women',('خانم ها')
         Sport     =    'sport',('اسپرت')
-
 
     class clothesExist(models.TextChoices):
         exist       =   True,   ('موجود')
@@ -58,6 +56,8 @@ class Product(models.Model):
     # slug      =   models.SlugField(unique=True,verbose_name='اسلاگ')
     beExist     =   models.CharField(max_length=10, verbose_name='موجودی', choices=clothesExist.choices, default=clothesExist.exist)
     active      =   models.BooleanField(default=True, verbose_name='فعال')
+    tags        =   models.ManyToManyField(Tag, blank=True, verbose_name='برچسب ها')
+    categories  =   models.ManyToManyField(ProductCategory, verbose_name='دسته بندی', blank=True, )
 
     class Meta:
         verbose_name='کالا'
@@ -74,7 +74,7 @@ def product_pre_save_receiver(sender, instance, *args, **kwargs):
         newObjid = get_unique_string_id(instance, 5)
         instance.objid=newObjid
 
-pre_save.connect(product_pre_save_receiver, sender=Product, )
+models.signals.pre_save.connect(product_pre_save_receiver, sender=Product, )
 
 
 

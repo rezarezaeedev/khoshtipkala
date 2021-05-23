@@ -1,4 +1,5 @@
 {% load static %}
+{% load render_partial %}
 <html>
     <head>
         <meta charset="utf-8">
@@ -27,6 +28,7 @@
             <div class="logo-404">
                 <a href="{% url 'home' %}"><img src="{% static 'images/home/logo.png' %}" alt="" /></a>
             </div>
+
             <div class="content-404">
                 <img src="{% static 'images/404/404.png' %}" style="width: 45%" class="img-responsive" alt="" />
                 <h1><b>متأسفانـه</b> صفحه مورد نظـر شما یافت نشد!</h1>
