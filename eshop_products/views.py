@@ -1,11 +1,11 @@
 import itertools
-
-from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.http import Http404,HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
+from .forms import CommentForm
 from .models import *
 from django.db.models import Q
-from eshop_tag.models import Tag
+from django.urls import reverse
 
 def list_grouper(n, iterable):
     args = [iter(iterable)] * n
@@ -25,21 +25,43 @@ class ProductsList(ListView):
         context['products']=self.get_queryset()
         return context
 
+def register_comment():
+    pass
+
 def product_detail(request, *args, **kwargs): # or...(request, slug):
     objid=kwargs['objid']
     title=kwargs['title']
+    loggedIn=request.user.is_authenticated
+    commentform = CommentForm(request.POST or None)
     try:
         product = Product.objects.get(objid=objid, active=True)
         product_gallery=ProductGallery.objects.filter(product_id=product.id)
         product_gallery=list_grouper(3,product_gallery)
+        comments=CommentProduct.objects.filter(product_id=product.id)
     except Product.DoesNotExist:
         return render(request, '404_error.html')
     except:
         return Http404('--Bad error')
+
     context = {
         'product':product,
         "product_gallery":product_gallery,
+        "comments":comments,
+        "commentform":commentform,
+        # 'statusComment':False,
+        # 'loggedIn':loggedIn,
     }
+
+    if commentform.is_valid():
+            name = commentform.cleaned_data.get('name')
+            email = commentform.cleaned_data.get('email')
+            text = commentform.cleaned_data.get('text')
+            CommentProduct.objects.create(name=name, email=email, text=text,product=product)
+            commentform = CommentForm()
+            context['commentform']= commentform
+            return redirect(reverse('productdetail',kwargs={'objid':objid,'title':title}))
+
+
     return render(request, 'products/product_detail.html', context)
 
 class SearchProductList(ListView):
@@ -125,8 +147,4 @@ class ProductByBrand(ListView):
         request=self.request
         context['products']=self.get_queryset()
         return context
-
-
-
-
 

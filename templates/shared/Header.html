@@ -41,14 +41,16 @@
 
 					<div class="col-sm-4" style="text-align: left;">
 						<div class="logo">
-							<a href="{% url 'home' %}"><img src="{% static 'images/home/logo.png' %}" alt="Logo" style="text-align: center;" /></a>
+							<a href="{% url 'home' %}"><img  src="{% static 'images/home/logo.jpg' %}" alt="Logo of khoshtip" style="text-align: center;width: 180px;height: 51px" /></a>
 						</div>
 					</div>
 
 					<div class="col-sm-8 header-middle-menu">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="/admin"><i class="fa fa-user"></i> حساب کاربـری</a></li>
+								{% if request.user.is_authenticated %}
+								    <li><a href="/admin" style="font-size: 15px; " > <i class="fa fa-user"> </i> {% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.username }}{% endif %} </a></li>
+								{% endif %}
 								<li><a href="#"><i class="fa fa-star"></i> لیست علاقه مندی ها</a></li>
                                 <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
                                 {% if request.user.is_authenticated %}

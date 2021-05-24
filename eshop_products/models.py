@@ -71,6 +71,7 @@ class Product(models.Model):
     active      =   models.BooleanField(default=True, verbose_name='فعال')
     tags        =   models.ManyToManyField(Tag, blank=True, verbose_name='برچسب ها')
     categories  =   models.ManyToManyField(ProductCategory, verbose_name='دسته بندی', blank=True, )
+    # timestamp = models.DateTimeField(auto_now_add=True,blank=True,null=True)
 
     class Meta:
         verbose_name='کالا'
@@ -101,6 +102,23 @@ def product_pre_save_receiver(sender, instance, *args, **kwargs):
 
 models.signals.pre_save.connect(product_pre_save_receiver, sender=Product, )
 
+class CommentProduct(models.Model):
+    class Rate(models.IntegerChoices):
+        nothing = (0,'نظری ندارم')
+        like = (1,'میپسندم')
+        dislike = (-1,'نمیپسندم')
 
+    name=models.CharField(max_length=302,verbose_name='نام و نام خانوادگی')
+    email=models.EmailField(max_length=50,verbose_name='ایمیل')
+    rate=models.IntegerField(choices=Rate.choices,default=Rate.nothing,verbose_name='رتبه')
+    text=models.TextField(max_length=1000,verbose_name='متن پیام')
+    timestamp=models.DateTimeField(auto_now_add=True)
+    product=models.ForeignKey(Product,on_delete=models.DO_NOTHING,verbose_name='مربوط به محصولِ')
+    active = models.BooleanField(default=True, verbose_name='فعال')
 
+    class Meta:
+        verbose_name='نظر'
+        verbose_name_plural='نظرات'
 
+    def __str__(self):
+        return self.text[:30]

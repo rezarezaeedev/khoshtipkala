@@ -1,0 +1,16 @@
+<div style="box-shadow: grey 0px 0px 2px;padding: 10px;margin:4px 4px 30px 4px">
+
+<ul>
+    <li><a  ><i class="fa fa-user"></i>مشتری: {{ comment.name }}</a></li>
+    <li><a ><i class="fa fa-clock-o"></i>{{ comment.timestamp|time }}</a></li>
+    <li><a  ><i class="fa fa-calendar-o"></i>{{ comment.timestamp|date }}</a></li>
+    {% if comment.rate == -1 %}
+        <li style="color: red;text-shadow: #faa1a1 0px 0px 10px"><a style="color: red"><i class="fa fa-calendar-o"></i>نمیپسندم</a></li>
+        {% elif comment.rate == 1  %}
+        <li style="color: green;text-shadow: #a9fda9 0px 0px 10px"><a style="color: green" ><i class="fa fa-calendar-o"></i>میپسندم</a></li>
+        {% else  %}
+    {% endif %}
+</ul>
+<pre>{{ comment.text }}</pre>
+</div>
+

@@ -2,6 +2,7 @@
 {% load static %}
 {% load render_partial %}
 {% block content %}
+        <title>جزئیات {{ product.title }} | فروشگاه خوشتیپ کالا</title>
     <style>
     .taglink:hover{
         text-decoration:underline
@@ -70,9 +71,6 @@
                                             <strong>موجودی:</strong>  <span style="color: red;text-shadow: 0px 0px 10px red">در انبار موجود نمیباشد</span>
                                         </p>
                                     {% endif %}
-
-
-
 									<p><b>فروشنده :</b> {{ product.seller.shopName   }}</p>
 									<p><b>برنـد :</b> {{ product.brand.title }} </p>
 									<p><b>دوختِ :</b> {{ product.brand.country }} </p>
@@ -97,7 +95,7 @@
 												<img src="{% static 'images/product-details/Instagram.png' %}">
 											</li>
 										</a>
-										<li><img src="{% static 'images/product-details/rating.png' %}" alt=""></li>
+
 									</ul>
 								</span>
 
@@ -108,158 +106,60 @@
 					<div class="category-tab shop-details-tab"><!--category-tab-->
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
-								<li><a href="#details" data-toggle="tab">نظرات (5)</a></li>
-								<li><a href="#companyprofile" data-toggle="tab">درباره سازنده</a></li>
+								<li class="active"><a href="#details" data-toggle="tab">جزئیات</a></li>
+
 								<li><a href="#tag" data-toggle="tab">برچسب</a></li>
-								<li class="active"><a href="#reviews" data-toggle="tab">جزئیات</a></li>
+								<li><a href="#reviews" data-toggle="tab"> نظرات ({{ comments.count }})</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
-							<div class="tab-pane fade" id="details">
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery.jpg' %}" alt="">
-												<h2>1.250.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery.jpg' %}" alt="">
-												<h2>1.250.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery.jpg' %}" alt="">
-												<h2>1.250.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
-											</div>
-										</div>
-									</div>
-								</div>
-                                <div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery.jpg' %}" alt="">
-												<h2>1.250.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
-											</div>
-										</div>
-									</div>
-								</div>
+							<div class="tab-pane fade active in" id="details">
+                                    <div class="col-sm-14">
+
+                                            <div class="col-md-12" >
+                                                <p style=" line-height: 30px;word-spacing: 5px;text-align: justify">{{ product.desc }}</p>
+                                            </div>
+
+                                    </div>
 							</div>
 
-							<div class="tab-pane fade" id="companyprofile">
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery.jpg' %}" alt="">
-												<h2>1.250.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
-											</div>
-										</div>
-									</div>
-								</div>
-                                <div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery.jpg' %}" alt="">
-												<h2>1.250.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
-											</div>
-										</div>
-									</div>
-								</div>
-                                <div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery.jpg' %}" alt="">
-												<h2>1.250.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
-											</div>
-										</div>
-									</div>
-								</div>
-                                <div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery.jpg' %}" alt="">
-												<h2>1.250.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+                        <div><br><br><br>
+
+                        </div>
 
 							<div class="tab-pane fade" id="tag">
-								<div class="col-sm-3">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="{% static 'images/home/gallery.jpg' %}" alt="">
-												<h2>1.250.000 ريال</h2>
-												<p>توضیحات کوتاه محصول</p>
-												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
-											</div>
-										</div>
-									</div>
+								<div class="col-sm-12">
+									{% for tag in product.tags.all %}
+                                            <span style="margin: 5px;padding: 4px;border-radius: 5px;background-color: orange;color: white">
+                                                <a href="/products/search?query={{ tag }}" class="taglink" style="color: white;font-size: 15px"># {{ tag}}</a>
+                                            </span>
+                                    {% endfor %}
 								</div>
 							</div>
 
-							<div class="tab-pane fade active in" id="reviews">
+							<div class="tab-pane fade " id="reviews">
 								<div class="col-sm-12">
-									<ul>
-										<li><a href=""><i class="fa fa-user"></i>مشتـری 1</a></li>
-										<li><a href=""><i class="fa fa-clock-o"></i>12:41 ب . ظ</a></li>
-										<li><a href=""><i class="fa fa-calendar-o"></i>29 تیـر 1397</a></li>
-									</ul>
-                                    <pre >{{ product.desc }}</pre>
+                                    <div id="comments">
+                                        {% for comment in comments %}
+                                            {% include 'components/product_comment_component.html' with comment=comment %}
+                                        {% endfor %}
+                                        <p><b>نظـر خود را بنویسیـد</b></p>
+                                    </div>
 
-                                    {% for tag in product.tags.all %}
-                                        <span style="margin: 3px;padding: 4px;border-radius: 5px;background-color: orange;color: white">
-                                            <a href="/products/search?query={{ tag }}" class="taglink" style="color: white;font-size: 15px"># {{ tag}}</a>
-                                        </span>
-                                    {% endfor %}
-                                    <br><br><br>
-									<p><b>نظـر خود را بنویسیـد</b></p>
-
-									<form action="#">
+									<form method="post">
+                                        {% csrf_token %}
 										<span>
-											<input type="text" placeholder="نام و نام خانوادگـی">
-											<input type="email" placeholder="آدرس ایمیـل">
+											{{ commentform.name }}
+											{{ commentform.email }}
 										</span>
-										<textarea name=""></textarea>
-										<b>رتبـه : </b> <img src="{% static 'images/product-details/rating.png' %}" alt="">
-										<button type="button" class="btn btn-default pull-left">
-											ارسـال
-										</button>
+                                        {{commentform.text}}<br>
+                                        <p><b>آیا این محصول را دوست داشتید؟</b></p>
+                                        {{commentform.rate}}<br><br>
+										<button style="border-radius: 5px" type="submit" class="btn btn-default pull-left">ثبت نظر</button>
+
 									</form>
+
+
 								</div>
 							</div>
 
