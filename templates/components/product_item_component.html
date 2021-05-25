@@ -1,38 +1,39 @@
 {% load static %}
+
 <div class="col-sm-4 pull-right" >
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
+        <div class="product-image-wrapper">
+            <div class="single-products">
+                <div class="productinfo text-center">
 
-                                   <div > <img style="{% if product.beExist == 'False' %}opacity: 0.3;{% endif %}" src="{{ product.image.url }}" alt="{{ product.title }} {{ product.desc }}" style="height: 237px;width: 255px;"> </div>
-                                    <h2>{{ product.price }},000 تومان </h2>
-                                    <p style="">{{ product.title }}</p>
-                                        {% if product.beExist == 'False' %}
-                                         <a href="#" class="btn btn-default add-to-cart text-danger"><i class="fa fa-shopping-cart"></i>ناموجود</a>
-                                            {% else %}
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-                                        {% endif %}
-                                </div>
-                                <div class="product-overlay">
-                                    <div class="overlay-content">
-                                        <h2>{{ product.price }},000 تومان</h2>
-                                        <p style="margin: 10px">{{ product.desc|truncatechars:40 }}</p>
+                   <div > <img style="{% if product.beExist == 'False' %}opacity: 0.3;{% endif %}" src="{{ product.image.url }}" alt="{{ product.title }} {{ product.desc }}" style="height: 237px;width: 255px;"> </div>
+                    <h2>{{ product.price }},000 تومان </h2>
+                    <p style="">{{ product.title }}</p>
+                        {% if product.beExist == 'False' %}
+                         <a href="#" class="btn btn-default add-to-cart text-danger"><i class="fa fa-shopping-cart"></i>ناموجود</a>
+                            {% else %}
+                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+                        {% endif %}
+                </div>
+                <div class="product-overlay">
+                    <div class="overlay-content">
+                        <h2>{{ product.price }},000 تومان</h2>
+                        <p style="margin: 10px">{{ product.desc|truncatechars:40 }}</p>
 
-                                        {% if product.beExist == 'False' %}
-                                         <a href="#" class="btn btn-default add-to-cart" style="color: red;text-shadow: 0px 0px 10px #ff9b9b"><i class="fa fa-shopping-cart "></i>ناموجود</a>
-                                            {% else %}
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="{{ product.get_absolute_url }}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
-  <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
+                        {% if product.beExist == 'False' %}
+                         <a href="#" class="btn btn-default add-to-cart" style="color: red;text-shadow: 0px 0px 10px #ff9b9b"><i class="fa fa-shopping-cart "></i>ناموجود</a>
+                            {% else %}
+                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="choose">
+                <ul class="nav nav-pills nav-justified">
+                    <li><a href="{{ product.get_absolute_url }}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+<path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
 </svg>مشاهده</a></li>
-                                    <li><a href=""><i class="fa fa-plus-square"></i>مقایسه</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                    <li><a href=""><i class="fa fa-plus-square"></i>مقایسه</a></li>
+                </ul>
+            </div>
+        </div>
 </div>

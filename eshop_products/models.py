@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from django.core import validators
 import os, time
-
 from eshop_brands.models import Brand
 from eshop_seller.models import Seller
 from .utils import get_unique_string_id
@@ -108,6 +108,7 @@ class CommentProduct(models.Model):
         like = (1,'میپسندم')
         dislike = (-1,'نمیپسندم')
 
+    userobject=models.ForeignKey(User,on_delete=models.DO_NOTHING,verbose_name='ایدی فرد نظر دهنده')
     name=models.CharField(max_length=302,verbose_name='نام و نام خانوادگی')
     email=models.EmailField(max_length=50,verbose_name='ایمیل')
     rate=models.IntegerField(choices=Rate.choices,default=Rate.nothing,verbose_name='رتبه')

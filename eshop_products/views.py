@@ -25,38 +25,43 @@ class ProductsList(ListView):
         context['products']=self.get_queryset()
         return context
 
-def register_comment():
-    pass
+def register_comment(commentform,product,request):
+    name = commentform.cleaned_data.get('name')
+    email = commentform.cleaned_data.get('email')
+    text = commentform.cleaned_data.get('text')
+    userobject=request.user
+    CommentProduct.objects.create(name=name, email=email, text=text, product=product, userobject=userobject)
 
 def product_detail(request, *args, **kwargs): # or...(request, slug):
     objid=kwargs['objid']
     title=kwargs['title']
-    loggedIn=request.user.is_authenticated
     commentform = CommentForm(request.POST or None)
     try:
         product = Product.objects.get(objid=objid, active=True)
         product_gallery=ProductGallery.objects.filter(product_id=product.id)
         product_gallery=list_grouper(3,product_gallery)
+        recomended_products_lookup = ( Q(brand=product.brand) |
+                                       Q(categories__in=product.categories.all()) |
+                                       Q(tags__in=product.tags.all())
+                                      )
+        recomended_products=Product.objects.filter(recomended_products_lookup,active=True).exclude(id=product.id).distinct()
+        recomended_products=list_grouper(3,recomended_products)
         comments=CommentProduct.objects.filter(product_id=product.id)
     except Product.DoesNotExist:
         return render(request, '404_error.html')
     except:
         return Http404('--Bad error')
-
     context = {
         'product':product,
         "product_gallery":product_gallery,
         "comments":comments,
         "commentform":commentform,
-        # 'statusComment':False,
-        # 'loggedIn':loggedIn,
+        "recomended_products":recomended_products,
+
     }
 
     if commentform.is_valid():
-            name = commentform.cleaned_data.get('name')
-            email = commentform.cleaned_data.get('email')
-            text = commentform.cleaned_data.get('text')
-            CommentProduct.objects.create(name=name, email=email, text=text,product=product)
+            register_comment(commentform, product, request)
             commentform = CommentForm()
             context['commentform']= commentform
             return redirect(reverse('productdetail',kwargs={'objid':objid,'title':title}))
