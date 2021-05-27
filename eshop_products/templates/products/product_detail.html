@@ -2,11 +2,15 @@
 {% load static %}
 {% load render_partial %}
 {% block content %}
-        <title>جزئیات {{ product.title }} | فروشگاه خوشتیپ کالا</title>
+    <title>جزئیات {{ product.title }} | فروشگاه خوشتیپ کالا</title>
     <style>
-    .taglink:hover{
-        text-decoration:underline
-    }
+        .taglink:hover{
+            text-decoration:underline
+        }
+
+        #orderlistbutton:active{
+             background-color: #ca8506;
+        }
     </style>
     <section>
 		<div class="container">
@@ -52,14 +56,40 @@
 									<span>
 										<span>قیمت : {{ product.price}} هزار تومان </span>
 									</span>
+
 									<span>
-										<label>تعداد :</label>
-										<input type="text" value="3" class="search_box">
-										<button type="button" class="btn btn-fefault cart">
-											<i class="fa fa-shopping-cart"></i>
-											افـزودن به سبـد خریـد
-										</button>
+										<form action="/add-user-order" method="post" id="orderlistform">
+                                            {% csrf_token %}
+                                            <label>تعداد :</label>
+                                            {{ orderdetailform.product_id }}
+                                            {{orderdetailform.count}}
+                                            {% for error in orderdetailform.count.errors %}
+                                                <p class="text-danger">{{ error }}</p>
+                                            {% endfor %}
+
+                                            <button type="button" onclick="submitOrderListForm()" class="btn btn-fefault cart" id="orderlistbutton">
+                                                <i class="fa fa-shopping-cart"></i>
+                                                افـزودن به سبـد خریـد
+									    	</button>
+                                        </form>
+
 									</span>
+                                        <script>
+                                            function submitOrderListForm(){
+                                                {% if request.user.is_authenticated %}
+                                                    if (document.getElementById('id_count').value>=1){
+                                                        document.getElementById('orderlistform').submit();
+                                                        alert('محصول شما با موفقیت به سبد خریدتان اضافه شد☻');
+                                                    }
+                                                    else{
+                                                        alert('تعدا را به درستی وارد کنید!!');
+                                                        document.getElementById('id_count').value=1;
+                                                    }
+                                                {% else %}
+                                                    alert('برای اضافه کردن به سبد خرید حتما باید وارد سایت شده باشید..!');
+                                                {% endif %}
+                                               }
+                                        </script>
 								</div>
 								<div>
                                     {% if product.beExist == 'True' %}

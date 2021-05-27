@@ -29,6 +29,7 @@ class Seller(models.Model):
     soroush   = models.CharField(verbose_name='آیدی سروش',default=r'https://hi.splus.ir',max_length=50)
     github    = models.CharField(verbose_name='آیدی گیتهاب',default=r'https://github.com',max_length=50)
     linkdin    = models.CharField(verbose_name='آیدی لینکدین',default=r'https://linkdin.com',max_length=50)
+    active = models.BooleanField(default=True, verbose_name='فعال/غیر فعال')
 
     class Meta:
         verbose_name = 'فروشنده'

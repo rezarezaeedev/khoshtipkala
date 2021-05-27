@@ -1,0 +1,103 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load static %}
+{% block content %}
+<div id="contact-page" class="container">
+    	<div class="bg">
+	    	<div class="row">
+				<div class="container">
+	    			<div class="col-sm-12" style="overflow: hidden; margin-bottom: 40px">
+						<h2 class="title text-center">تمـاس با مـا</h2>
+                        {% include 'components/google_map_template_component.html' with sitesetting=sitesetting %}
+					</div>
+				</div>
+				</div>
+    		<div class="row">
+	    		<div class="col-sm-8">
+	    			<div class="contact-form">
+	    				<h2 class="title text-center">با ما در ارتباط باشیـد</h2>
+	    				<div class="status alert alert-success" style="display: none"></div>
+				    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
+                            {% csrf_token %}
+				            <div class="form-group col-md-6">
+                                {{contactform.fullname}}
+                                {% for error in contactform.fullname.errors %}
+                                    <p class="text-danger">{{ error }}</p>
+                                {% endfor %}
+
+				            </div>
+				            <div class="form-group col-md-6">
+				                {{contactform.email}}
+                                {% for error in contactform.email.errors %}
+                                    <p class="text-danger">{{ error }}</p>
+                                {% endfor %}
+				            </div>
+				            <div class="form-group col-md-12">
+				                {{contactform.subject}}
+                                {% for error in contactform.subject.errors %}
+                                    <p class="text-danger">{{ error }}</p>
+                                {% endfor %}
+				            </div>
+				            <div class="form-group col-md-12">
+				                {{contactform.text}}
+                                {% for error in contactform.text.errors %}
+                                    <p class="text-danger">{{ error }}</p>
+                                {% endfor %}
+				            </div>
+				            <div class="form-group col-md-12">
+				                <input   onclick="submiter()" class="btn btn-primary pull-right" value="ارسـال">
+                                <script>
+                                    function submiter(){
+                                        {% if request.user.is_authenticated %}
+                                            document.getElementById('main-contact-form').submit();
+                                            alert('پیغام به پشتیبانی ارسال شد☻');
+                                        {% else %}
+                                            alert('برای پیغام حتما باید وارد سایت شده باشید..!');
+                                        {% endif %}
+                                    }
+                                </script>
+				            </div>
+				        </form>
+	    			</div>
+	    		</div>
+	    		<div class="col-sm-4">
+	    			<div class="contact-info">
+	    				<h2 class="title text-center">اطلاعات تماس</h2>
+	    				<address>
+	    					<p><span >{{ sitesetting.title }}</span> - <span style="color: orange">{{ sitesetting.titleEnglish|upper }}</span> </p>
+							<p>آدرس: {{ sitesetting.address }}</p>
+
+							<p>تلفن همراه : 80{{sitesetting.mobile}}</p>
+							<p>تلفن : 80{{sitesetting.tel}}</p>
+							<p>فکس : {{ sitesetting.fax}}</p>
+							<p style="font-family: tahoma;">ایمیـل : <a href="https://{{ sitesetting.email }}" target="_blank">{{ sitesetting.email}}</a></p>
+	    				</address>
+	    				<div class="social-networks">
+	    					<h2 class="title text-center">شبکـه های اجتـماعی</h2>
+							<span class="socials-share share">
+									<ul>
+										{% if sitesetting.telegram %}
+                                            <a id="telegram" target="_blank" href="https://t.me/{{ sitesetting.owner.seller.telegram }}">
+                                                <li>
+                                                    <label for="telegram">تلگرام</label>
+                                                    <img src="{% static 'images/product-details/Telegram.png' %}">
+                                                </li>
+                                            </a>
+										{% endif %}
+                                        {% if sitesetting.instagram %}
+                                            <a id="instagram" target="_blank" href="https://instagram.com/{{ sitesetting.owner.seller.instagram }}">
+                                                <li>
+                                                    <label for="instagram">اینستاگرام</label>
+                                                    <img src="{% static 'images/product-details/Instagram.png' %}">
+                                                </li>
+                                            </a>
+                                        {% endif %}
+
+									</ul>
+								</span>
+	    				</div>
+	    			</div>
+    			</div>
+	    	</div>
+    	</div>
+    </div>
+{% endblock %}

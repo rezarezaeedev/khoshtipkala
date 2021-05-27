@@ -2,6 +2,7 @@
 {% url 'home' as home_url %}
 {% url 'products' as products_url %}
 	<header id="header"><!--header-->
+
 		<div class="header_top"><!--header_top-->
 			<div class="container">
 				<div class="row">
@@ -41,7 +42,7 @@
 
 					<div class="col-sm-4" style="text-align: left;">
 						<div class="logo">
-							<a href="{% url 'home' %}"><img  src="{% static 'images/home/logo.jpg' %}" alt="Logo of khoshtip" style="text-align: center;width: 180px;height: 51px" /></a>
+							<a href="{% url 'home' %}"><img  src="{{ sitesetting.image.url }}" alt="Logo of khoshtip" style="text-align: center;width: 180px;height: 51px" /></a>
 						</div>
 					</div>
 
@@ -90,8 +91,8 @@
 										<li><a href="blog-single.html">صفحـه خبـر</a></li>
                                     </ul>
                                 </li>
-								<li><a href="About.html">درباره مـا</a></li>
-								<li><a href="contact-us.html">تماس با مـا</a></li>
+								<li><a href="{% url 'about' %}">درباره مـا</a></li>
+								<li><a href="{% url 'contact-us' %}">تماس با مـا</a></li>
 							</ul>
 						</div>
 					</div>

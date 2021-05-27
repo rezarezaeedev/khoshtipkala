@@ -2,6 +2,8 @@ import itertools
 from django.http import Http404,HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
+
+from eshop_order.forms import OrderForm
 from .forms import CommentForm
 from .models import *
 from django.db.models import Q
@@ -38,6 +40,7 @@ def product_detail(request, *args, **kwargs): # or...(request, slug):
     commentform = CommentForm(request.POST or None)
     try:
         product = Product.objects.get(objid=objid, active=True)
+        product_id=product.id
         product_gallery=ProductGallery.objects.filter(product_id=product.id)
         product_gallery=list_grouper(3,product_gallery)
         recomended_products_lookup = ( Q(brand=product.brand) |
@@ -51,13 +54,16 @@ def product_detail(request, *args, **kwargs): # or...(request, slug):
         return render(request, '404_error.html')
     except:
         return Http404('--Bad error')
+
+    orderdetailform=OrderForm(request.POST or None,initial={'product_id':product_id})
+
     context = {
         'product':product,
         "product_gallery":product_gallery,
         "comments":comments,
         "commentform":commentform,
         "recomended_products":recomended_products,
-
+        "orderdetailform":orderdetailform,
     }
 
     if commentform.is_valid():
