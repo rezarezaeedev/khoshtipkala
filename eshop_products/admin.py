@@ -28,3 +28,4 @@ class CommentProductAdmin(admin.ModelAdmin):
 admin.site.register(Product,ProductAdmin)
 admin.site.register(ProductGallery,ProductGalleryAdmin)
 admin.site.register(CommentProduct,CommentProductAdmin )
+admin.site.register(FavoriteProducts  )

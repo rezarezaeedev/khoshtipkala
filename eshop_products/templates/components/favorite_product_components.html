@@ -1,0 +1,21 @@
+<form  style="display: inline-block;margin-right: 3px" method="post" id="favoritelistform">
+    {% csrf_token %}
+    {{ favoriteform.product_id }}
+    <button type="button" onclick="submitFavoriteForm()" style="background-color: transparent;border: none" >
+           {% if favoriteproduct %}
+                 <i class="fa fa-heart" style="font-size: 25px;color: red;"></i>
+           {% else %}
+                 <i class="fa fa-heart-o" style="font-size: 25px;color: red;"></i>
+           {% endif %}
+    </button>
+</form>
+<script>
+        function submitFavoriteForm(){
+            {% if request.user.is_authenticated %}
+                    alert('محصول شما با موفقیت به لیست علاقمندی ها اضافه شد☻');
+                    document.getElementById('favoritelistform').submit();
+            {% else %}
+                alert('برای اضافه کردن به لیست علاقمندی ها حتما باید وارد سایت شده باشید..!');
+            {% endif %}
+           }
+</script>

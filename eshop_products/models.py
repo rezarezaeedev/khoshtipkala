@@ -123,3 +123,20 @@ class CommentProduct(models.Model):
 
     def __str__(self):
         return self.text[:30]
+
+
+class FavoriteProducts(models.Model):
+    product=models.ForeignKey(Product,on_delete=models.CASCADE,verbose_name='محصول')
+    owner=models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='کاربر')
+
+    class Meta:
+        verbose_name='محصول مورد علاقه'
+        verbose_name_plural='لیست علاقمندی ها'
+
+    def __str__(self):
+        return self.product
+
+
+
+
+

@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.generic import ListView
+
 from eshop_order.forms import OrderForm
 from eshop_order.models import Order, OrderDetail
 from eshop_products.models import Product
@@ -55,3 +57,7 @@ def add_user_order(request):
 #         return redirect(reverse('productdetail',kwargs={ 'objid':product.objid,'title':product.title.replace(' ','-')}))
 #
 #     return redirect(reverse('login'))
+
+
+class OrderProductList(ListView):
+    template_name = ''

@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 
 from eshop_order.forms import OrderForm
-from .forms import CommentForm
+from .forms import CommentForm, FavoriteForm
 from .models import *
 from django.db.models import Q
 from django.urls import reverse
@@ -34,6 +34,15 @@ def register_comment(commentform,product,request):
     userobject=request.user
     CommentProduct.objects.create(name=name, email=email, text=text, product=product, userobject=userobject)
 
+
+def add_product_to_favorite(product,request):
+    owner=request.user
+    if FavoriteProducts.objects.filter(product=product,owner=owner).count() == 0:
+        FavoriteProducts.objects.create(owner=owner,product=product)
+    else:
+        FavoriteProducts.objects.filter(product=product,owner=owner).delete()
+
+
 def product_detail(request, *args, **kwargs): # or...(request, slug):
     objid=kwargs['objid']
     title=kwargs['title']
@@ -56,6 +65,11 @@ def product_detail(request, *args, **kwargs): # or...(request, slug):
         return Http404('--Bad error')
 
     orderdetailform=OrderForm(request.POST or None,initial={'product_id':product_id})
+    favoriteform=FavoriteForm(request.POST or None,initial={'product_id':product_id})
+    if not request.user.is_anonymous:
+        favoriteproduct=FavoriteProducts.objects.filter(product=product,owner=request.user).exists()
+    else:
+        favoriteproduct=False
 
     context = {
         'product':product,
@@ -64,14 +78,20 @@ def product_detail(request, *args, **kwargs): # or...(request, slug):
         "commentform":commentform,
         "recomended_products":recomended_products,
         "orderdetailform":orderdetailform,
+        "favoriteform":favoriteform,
+        "favoriteproduct":favoriteproduct,
     }
 
-    if commentform.is_valid():
-            register_comment(commentform, product, request)
-            commentform = CommentForm()
-            context['commentform']= commentform
-            return redirect(reverse('productdetail',kwargs={'objid':objid,'title':title}))
+    if favoriteform.is_valid():
+        add_product_to_favorite(product,request)
+        context['favoriteform']=FavoriteForm()
+        return redirect(reverse('productdetail', kwargs={'objid': product.objid, 'title': product.title}))
 
+    if commentform.is_valid():
+        register_comment(commentform, product, request)
+        commentform = CommentForm()
+        context['commentform']= commentform
+        return redirect(reverse('productdetail',args=[product.objid,product.title]))
 
     return render(request, 'products/product_detail.html', context)
 
@@ -158,4 +178,3 @@ class ProductByBrand(ListView):
         request=self.request
         context['products']=self.get_queryset()
         return context
-

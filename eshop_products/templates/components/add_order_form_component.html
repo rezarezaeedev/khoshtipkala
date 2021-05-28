@@ -1,0 +1,31 @@
+<form action="/add-user-order" method="post" id="orderlistform" style="display: inline-block;margin-left: 3px">
+        {% csrf_token %}
+        <label>تعداد :</label>
+        {{ orderdetailform.product_id }}
+        {{orderdetailform.count}}
+        {% for error in orderdetailform.count.errors %}
+            <p class="text-danger">{{ error }}</p>
+        {% endfor %}
+
+        <button type="button" onclick="submitOrderListForm()" style="display: inline-block"  class="btn btn-fefault cart" id="orderlistbutton">
+            <i class="fa fa-shopping-cart"></i>
+            افـزودن به سبـد خریـد
+
+        </button>
+</form>
+<script>
+        function submitOrderListForm(){
+            {% if request.user.is_authenticated %}
+                if (document.getElementById('id_count').value>=1){
+                    document.getElementById('orderlistform').submit();
+                    alert('محصول شما با موفقیت به سبد خریدتان اضافه شد☻');
+                }
+                else{
+                    alert('تعدا را به درستی وارد کنید!!');
+                    document.getElementById('id_count').value=1;
+                }
+            {% else %}
+                alert('برای اضافه کردن به سبد خرید حتما باید وارد سایت شده باشید..!');
+            {% endif %}
+           }
+</script>

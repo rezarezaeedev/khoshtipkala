@@ -45,3 +45,7 @@ class CommentForm(forms.Form):
     )
 
 
+class FavoriteForm(forms.Form):
+    product_id=forms.IntegerField(
+        widget=forms.HiddenInput()
+    )
