@@ -32,7 +32,7 @@ def upload_gallery_image_path(instance, filepath):
 
 class ProductManager(models.Manager):
     def get_active_products(self,active=True):
-        objects=self.get_queryset().filter(active=active)
+        objects=self.get_queryset().filter(active=active).order_by('-timestamp')
         return objects
 
 class Product(models.Model):
@@ -60,7 +60,7 @@ class Product(models.Model):
     seller      =   models.ForeignKey(Seller,on_delete=models.DO_NOTHING,verbose_name='فروشنده')
     objid       =   models.CharField(max_length=10,editable=False)
     title       =   models.CharField(max_length=120, verbose_name='عنوان')
-    brand       =   models.ForeignKey(Brand,verbose_name='برند محصول',on_delete=models.DO_NOTHING,)
+    brand       =   models.ForeignKey(Brand,verbose_name='برند محصول',on_delete=models.DO_NOTHING)
     gender      =   models.CharField(choices=clothesGender.choices,max_length=10,default=clothesGender.Men,verbose_name='برای')
     size        =   models.CharField(choices=clothesSize.choices,default=clothesSize.Medium,blank=False,null=False,max_length=10, verbose_name='سایز لباس')
     desc        =   models.TextField(verbose_name='توضیحات')
@@ -71,7 +71,7 @@ class Product(models.Model):
     active      =   models.BooleanField(default=True, verbose_name='فعال')
     tags        =   models.ManyToManyField(Tag, blank=True, verbose_name='برچسب ها')
     categories  =   models.ManyToManyField(ProductCategory, verbose_name='دسته بندی', blank=True, )
-    # timestamp = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    timestamp = models.DateTimeField(auto_now_add=True,blank=True,null=True)
 
     class Meta:
         verbose_name='کالا'
@@ -134,7 +134,7 @@ class FavoriteProducts(models.Model):
         verbose_name_plural='لیست علاقمندی ها'
 
     def __str__(self):
-        return self.product
+        return self.product.title
 
 
 

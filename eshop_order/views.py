@@ -3,22 +3,19 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView
 
-from eshop_order.forms import OrderForm
+from eshop_order.forms import *
 from eshop_order.models import Order, OrderDetail
 from eshop_products.models import Product
 
-
+@login_required(login_url='/login')
 def add_user_order(request):
     orderlistform=OrderForm(request.POST or None)
     user=request.user
     if orderlistform.is_valid():
-        product_id  =   orderlistform.cleaned_data.get('product_id')
-        product     =   Product.objects.filter(id=product_id).first()
-        count       =  orderlistform.cleaned_data.get('count')
-        if user.is_authenticated:
-            if count<1:
-                count=1
-
+        product_objid   =   orderlistform.cleaned_data.get('product_objid')
+        product         =   Product.objects.filter(objid=product_objid).first()
+        count           =   orderlistform.cleaned_data.get('count')
+        if product.beExist:
             order=Order.objects.filter(owner=user,is_paid=False).last()  # get/create orderlist
             if order is None:
                 order=Order.objects.create(owner=user,is_paid=False)
@@ -29,8 +26,7 @@ def add_user_order(request):
             else:
                 orderdetail.count+=count
                 orderdetail.save()
-            return redirect(reverse('productdetail',args=[product.objid,product.title]))
-        return redirect(reverse('login')) # if not authenticated user
+        return redirect(reverse('productdetail',args=[product.objid,product.title.replace(' ','-')]))
     return render(request, '404_error.html')
 
 
@@ -58,6 +54,41 @@ def add_user_order(request):
 #
 #     return redirect(reverse('login'))
 
+@login_required(login_url='/login')
+def user_open_order_list(request):
+    user=request.user
+    context={
+        'openorder':None,
+        'detailorder':None,
+    }
 
-class OrderProductList(ListView):
-    template_name = ''
+
+    openorder:Order=Order.objects.filter(owner=user, is_paid=False).last()
+    detailorder=openorder.orderdetail_set.all()
+    if openorder is not None:
+        context['openorder']=openorder
+        context['detailorder']=detailorder
+
+    return render(request, 'order/user_open_order_list.html', context)
+
+@login_required(login_url='/login')
+def change_count_product_in_open_order(request,objid,mode):
+    user=request.user
+    order=Order.objects.filter(owner=user,is_paid=False).last()
+    orderdetail=order.orderdetail_set.filter(product__objid=objid).last()
+    try:
+        mode=int(mode)
+    except:
+        return render(request,'404_error.html')
+
+    if mode==1:
+        orderdetail.count+=1
+        orderdetail.save()
+    elif orderdetail.count<2 or mode==-1:
+        orderdetail.delete()
+    else:
+        orderdetail.count-=1
+        orderdetail.save()
+
+    return redirect(reverse('user-open_order'))
+

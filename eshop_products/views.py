@@ -1,4 +1,6 @@
 import itertools
+
+from django.contrib.auth.decorators import login_required
 from django.http import Http404,HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
@@ -56,20 +58,22 @@ def product_detail(request, *args, **kwargs): # or...(request, slug):
                                        Q(categories__in=product.categories.all()) |
                                        Q(tags__in=product.tags.all())
                                       )
-        recomended_products=Product.objects.filter(recomended_products_lookup,active=True).exclude(id=product.id).distinct()
+        recomended_products=Product.objects.filter(recomended_products_lookup,active=True,gender=product.gender).exclude(id=product.id).distinct()
         recomended_products=list_grouper(3,recomended_products)
         comments=CommentProduct.objects.filter(product_id=product.id)
+        
     except Product.DoesNotExist:
         return render(request, '404_error.html')
     except:
         return Http404('--Bad error')
 
-    orderdetailform=OrderForm(request.POST or None,initial={'product_id':product_id})
-    favoriteform=FavoriteForm(request.POST or None,initial={'product_id':product_id})
+
+    orderdetailform=OrderForm(request.POST or None, initial={'product_objid':objid})
+    favoriteform=FavoriteForm(request.POST or None, initial={'product_objid':objid})
     if not request.user.is_anonymous:
         favoriteproduct=FavoriteProducts.objects.filter(product=product,owner=request.user).exists()
     else:
-        favoriteproduct=False
+        favoriteproduct=0
 
     context = {
         'product':product,
@@ -85,13 +89,13 @@ def product_detail(request, *args, **kwargs): # or...(request, slug):
     if favoriteform.is_valid():
         add_product_to_favorite(product,request)
         context['favoriteform']=FavoriteForm()
-        return redirect(reverse('productdetail', kwargs={'objid': product.objid, 'title': product.title}))
+        return redirect(reverse('productdetail', kwargs={'objid': product.objid, 'title': product.title.replace(' ','-')}))
 
     if commentform.is_valid():
         register_comment(commentform, product, request)
         commentform = CommentForm()
         context['commentform']= commentform
-        return redirect(reverse('productdetail',args=[product.objid,product.title]))
+        return redirect(reverse('productdetail',args=[product.objid,product.title.replace(' ','-')]))
 
     return render(request, 'products/product_detail.html', context)
 
@@ -172,6 +176,23 @@ class ProductByBrand(ListView):
         brand=self.kwargs['brand']
         objects = Product.objects.filter(brand__slug__iexact=brand,active=True)
         return objects
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context=super().get_context_data()
+        request=self.request
+        context['products']=self.get_queryset()
+        return context
+
+
+class FavoriteProductList(ListView):
+    template_name = 'products/favorite_product_list.html'
+    paginate_by = 6
+
+    def get_queryset(self):
+        user=self.request.user
+        favoritelist=FavoriteProducts.objects.filter(owner=user)
+        products=list(map(lambda x:x.product,favoritelist))
+        return products
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context=super().get_context_data()

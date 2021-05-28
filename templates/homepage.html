@@ -18,11 +18,10 @@
                                 <div class="col-sm-6">
                                     <h1> {{ slide.title }} <span>{{ slide.titleWhite }}</span></h1>
                                     <p style="margin-top: 20px">{{ slide.desc|truncatechars:200}}</p>
-                                    <a class="btn btn-default get" href="{{ slide.link }}">بیشتر</a>
+                                    <a class="btn btn-default get" href="{{ slide.get_absolute_url }}">بیشتر</a>
                                 </div>
                                 <div class="col-sm-6">
                                     <img style="height: 400px" src="{{slide.image.url}}" class="girl img-responsive" alt="" />
-
                                 </div>
                             </div>
                         {% endfor %}

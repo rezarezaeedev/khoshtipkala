@@ -1,0 +1,63 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load static %}
+{% load render_partial %}
+{% block content %}
+<section>
+    <style>
+        #productlistinfavorite:hover{
+            color: orange;
+            text-shadow: 0px 0px 10px #8cbbff;
+            font-size: large;
+            font-weight: bolder;
+            text-decoration: underline ;
+        }
+    </style>
+    <title>صفحه محصولات | فروشگاه خوشتیپ کالا</title>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-9 padding-right" >
+					<div class="features_items"><!--features_items-->
+                    {% if page_obj %}
+						<h2 class="title text-center">لیست محصولات مورد علاقه شما</h2>
+                        <br> <br>
+                        <div>
+                                {% for product in page_obj %}
+                                    {% include 'components/product_item_component.html' with product=product %}
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-center" style="font-size: 30px;color: orange;margin-top:50px ">لیست علاقمندی ها خالی میباشد</p>
+                                <p style="display: inline-block;margin: 5px"> محصولی را علاقمندی اضافه کنید </p><a id="productlistinfavorite" href="{% url 'products' %}" style="color: #5897fb; "> لیست محصولات </a>
+                                <div style="height: 2px;width: 100%;background-color: rgba(250,160,0,0.3);margin-top: 30px"></div>
+                            {% endif %}
+                        </div>
+
+                        <div style="clear: both">
+
+                            <br><br>
+                        <!-- Search implementions in normal show and searched show -->
+                            {% include 'components/paginator_component.html' %}
+                        <!-- Search implementions -END -->
+                        <br>
+                        </div>
+
+					</div>  <!--features_items-->
+				</div>
+                <div class="col-sm-3" >
+					<div class="left-sidebar">
+                            {% render_partial 'CategoryList_partial' %}
+                            {% render_partial 'BrandList_partial' %}
+						</div><!--/brands_products-->
+                            <div class="price-range"><!--price-range-->
+                                <h2>فیلتـر قیمـت</h2>
+                                <div class="well">
+                                     <div class="slider slider-horizontal" style="width: 139px;"><div class="slider-track"><div class="slider-selection" style="left: 0.025%; width: 0.02%;"></div><div class="slider-handle round left-round" style="left: 0.025%;"></div><div class="slider-handle round" style="left: 0.045%;"></div></div><div class="tooltip top" style="top: -30px; left: -33.4513px;"><div class="tooltip-arrow"></div><div class="tooltip-inner">250 : 450</div></div><input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000000" data-slider-step="5" data-slider-value="[250,450]" id="sl2" style=""></div><br>
+                                     <b>1.000.000 ريال</b> <b class="pull-left">0 ريال</b>
+                                </div>
+                            </div><!--/price-range-->
+					</div>
+				</div>
+			</div>
+             <br><br>
+        </div>
+	</section>
+{% endblock %}

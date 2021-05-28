@@ -52,8 +52,8 @@
 								{% if request.user.is_authenticated %}
 								    <li><a href="/admin" style="font-size: 15px; " > <i class="fa fa-user"> </i> {% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.username }}{% endif %} </a></li>
 								{% endif %}
-								<li><a href="#"><i class="fa fa-star"></i> لیست علاقه مندی ها</a></li>
-                                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
+								<li><a href="{% url 'favorite-products' %}"><i class="fa fa-star"></i> لیست علاقه مندی ها</a></li>
+                                <li><a href="{% url 'user-open_order' %}"><i class="fa fa-shopping-cart"></i> سبد خریـد</a></li>
                                 {% if request.user.is_authenticated %}
                                     <li><a href="{% url 'logout' %}"><i class="fa fa-warning"></i>  خروج  </a></li>
                                 {% else %}

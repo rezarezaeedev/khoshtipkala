@@ -58,9 +58,7 @@
 									</span>
 
 									<span>
-
-
-                                    {% include 'components/add_order_form_component.html' with orderdetailform=orderdetailform request=request %}
+                                    {% include 'components/add_order_form_component.html' with orderdetailform=orderdetailform request=request product=product %}
                                     {% include 'components/favorite_product_components.html' with favoriteform=favoriteform favoriteproduct=favoriteproduct request=request  %}
 									</span>
 

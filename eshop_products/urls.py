@@ -9,5 +9,6 @@ urlpatterns=[
     path('products/barnd/<brand>', ProductByBrand.as_view()),
     path('products/category/<category>', ProductsBycategory.as_view()),
     path('products/<objid>/<title>', product_detail, name='productdetail'),
+    path('products/favorites', FavoriteProductList.as_view(), name='favorite-products'),
 
 ]

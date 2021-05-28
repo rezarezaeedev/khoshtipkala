@@ -2,6 +2,9 @@ import os
 import time
 from django.db import models
 
+from eshop_products.models import Product
+
+
 def get_name_extention(filepath):
     basename    =   os.path.basename(filepath)
     name, ext   =   os.path.splitext(basename)
@@ -17,12 +20,12 @@ def upload_image_path(instance, filepath):
 
 
 class Slide(models.Model):
-    title = models.CharField(max_length=70,verbose_name='عنوان')
-    titleWhite = models.CharField(max_length=70,verbose_name='عنوان دوم',blank=True)
-    desc  = models.TextField(max_length=250,verbose_name="توضیحات")
-    link  = models.URLField(max_length=150,verbose_name='لینک')
-    image = models.ImageField(upload_to=upload_image_path,verbose_name='تصویر')
-    active = models.BooleanField(default=True, verbose_name='فعال')
+    product    =   models.ForeignKey(Product,on_delete=models.CASCADE,verbose_name='محصول',blank=True)
+    title      =   models.CharField(max_length=70,verbose_name='عنوان')
+    titleWhite =   models.CharField(max_length=70,verbose_name='عنوان دوم',blank=True)
+    desc       =   models.TextField(max_length=250,verbose_name="توضیحات")
+    image      =   models.ImageField(upload_to=upload_image_path,verbose_name='تصویر')
+    active     =   models.BooleanField(default=True, verbose_name='فعال')
 
     class Meta:
         verbose_name='اسلایدر'
@@ -30,3 +33,7 @@ class Slide(models.Model):
 
     def __str__(self):
         return self.title
+
+
+    def get_absolute_url(self):
+        return self.product.get_absolute_url()
