@@ -33,8 +33,9 @@ def register_comment(commentform,product,request):
     name = commentform.cleaned_data.get('name')
     email = commentform.cleaned_data.get('email')
     text = commentform.cleaned_data.get('text')
+    rate = commentform.cleaned_data.get('rate')
     userobject=request.user
-    CommentProduct.objects.create(name=name, email=email, text=text, product=product, userobject=userobject)
+    CommentProduct.objects.create(name=name, email=email, text=text, product=product, userobject=userobject,rate=rate)
 
 
 def add_product_to_favorite(product,request):
@@ -84,6 +85,7 @@ def product_detail(request, *args, **kwargs): # or...(request, slug):
         "orderdetailform":orderdetailform,
         "favoriteform":favoriteform,
         "favoriteproduct":favoriteproduct,
+
     }
 
     if favoriteform.is_valid():
@@ -190,7 +192,8 @@ class FavoriteProductList(ListView):
 
     def get_queryset(self):
         user=self.request.user
-        favoritelist=FavoriteProducts.objects.filter(owner=user)
+        # favoritelist=FavoriteProducts.objects.filter(owner=user)
+        favoritelist=user.favoriteproducts_set.all()
         products=list(map(lambda x:x.product,favoritelist))
         return products
 

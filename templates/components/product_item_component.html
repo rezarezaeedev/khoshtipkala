@@ -6,7 +6,7 @@
                 <div class="productinfo text-center">
 
                    <div > <img style="{% if product.beExist == 'False' %}opacity: 0.3;{% endif %}" src="{{ product.image.url }}" alt="{{ product.title }} {{ product.desc }}" style="height: 237px;width: 255px;"> </div>
-                    <h2>{{ product.price }},000 تومان </h2>
+                    <h2>{{ product.get_price_seperated|last }} تومان </h2>
                     <p style="">{{ product.title }}</p>
                         {% if product.beExist == 'False' %}
                          <a href="#" class="btn btn-default add-to-cart text-danger"><i class="fa fa-shopping-cart"></i>ناموجود</a>

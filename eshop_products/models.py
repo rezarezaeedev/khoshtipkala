@@ -83,6 +83,12 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('productdetail', kwargs={'objid':self.objid,'title':self.title.replace(' ','-')})
 
+    # [0], |first: price -[1], |last: price seperated
+    def get_price_seperated(self):
+        price=self.price
+        price_seperated=f'{price:,}'
+        return price, price_seperated
+
 class ProductGallery(models.Model):
     title = models.CharField(max_length=150,verbose_name='عنوان')
     image = models.ImageField(upload_to=upload_gallery_image_path, verbose_name='تصویر')

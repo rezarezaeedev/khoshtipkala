@@ -8,6 +8,7 @@ def header(request, *args, **kwargs):
     context={
         'sitesetting':sitesetting
     }
+
     return render(request, 'shared/Header.html', context)
 
 def footer(request, *args, **kwargs):

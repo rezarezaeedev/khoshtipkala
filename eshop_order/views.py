@@ -1,8 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import ListView
-
 from eshop_order.forms import *
 from eshop_order.models import Order, OrderDetail
 from eshop_products.models import Product
@@ -28,7 +26,6 @@ def add_user_order(request):
                 orderdetail.save()
         return redirect(reverse('productdetail',args=[product.objid,product.title.replace(' ','-')]))
     return render(request, '404_error.html')
-
 
 # # @login_required
 # def add_user_order(request):
@@ -62,10 +59,9 @@ def user_open_order_list(request):
         'detailorder':None,
     }
 
-
     openorder:Order=Order.objects.filter(owner=user, is_paid=False).last()
-    detailorder=openorder.orderdetail_set.all()
     if openorder is not None:
+        detailorder = openorder.orderdetail_set.all()
         context['openorder']=openorder
         context['detailorder']=detailorder
 
@@ -82,8 +78,9 @@ def change_count_product_in_open_order(request,objid,mode):
         return render(request,'404_error.html')
 
     if mode==1:
-        orderdetail.count+=1
-        orderdetail.save()
+        if orderdetail.product.beExist:
+            orderdetail.count+=1
+            orderdetail.save()
     elif orderdetail.count<2 or mode==-1:
         orderdetail.delete()
     else:

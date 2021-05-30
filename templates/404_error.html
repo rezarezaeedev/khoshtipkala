@@ -32,7 +32,10 @@
             <div class="content-404">
                 <img src="{% static 'images/404/404.png' %}" style="width: 45%" class="img-responsive" alt="" />
                 <h1><b>متأسفانـه</b> صفحه مورد نظـر شما یافت نشد!</h1>
-                <h2><a href="{% url 'home' %}">برو به صفحه اصلی</a></h2>
+                <h2><a href="{% url 'home' %}">برو به صفحه اصلی</a></h2><br><br><br>
+                {% if errorcode %}
+                    <h4 style="direction: ltr">Error code:{{ errorcode }}</h4>
+                {% endif %}
             </div>
         </div>
             <script src="{% static 'js/jquery.js' %}"></script>

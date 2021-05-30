@@ -32,6 +32,7 @@ class SiteSetting(models.Model):
     copyright=models.CharField(max_length=200,verbose_name='قانون کپی رایت')
     image=models.ImageField(upload_to=upload_image_path,verbose_name='لوگو سایت (51*180)')
     mapurl=models.URLField(verbose_name='نشانی فروشگاه/دفتر')
+    tax_of_sell=models.PositiveSmallIntegerField(default=9,verbose_name='درصد مالیات بر فروش محصولات')
     active=models.BooleanField(default=True,verbose_name='فعال/غیرفعال')
 
     class Meta:

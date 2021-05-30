@@ -1,7 +1,7 @@
 <form action="/add-user-order" method="post" id="orderlistform" style="display: inline-block;margin-left: 3px">
         {% csrf_token %}
         <label>تعداد :</label>
-        {{ orderdetailform.product_id }}
+        {{ orderdetailform.product_objid }}
         {{orderdetailform.count}}
         {% for error in orderdetailform.count.errors %}
             <p class="text-danger">{{ error }}</p>

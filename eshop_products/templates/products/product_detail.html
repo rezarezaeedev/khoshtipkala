@@ -12,6 +12,11 @@
              background-color: #ca8506;
         }
     </style>
+    <br>
+    <hr>
+
+    <br>
+    <hr>
     <section>
 		<div class="container">
 			<div class="row">
@@ -54,7 +59,7 @@
 								</div>
 								<div>
 									<span>
-										<span>قیمت : {{ product.price}} هزار تومان </span>
+										<span>قیمت : {{ product.get_price_seperated|last}}  تومان </span>
 									</span>
 
 									<span>
@@ -110,7 +115,7 @@
 							<ul class="nav nav-tabs">
 								<li class="active"><a href="#details" data-toggle="tab">جزئیات</a></li>
 
-								<li><a href="#tag" data-toggle="tab">برچسب</a></li>
+								<li><a href="#tag" data-toggle="tab"> برچسب</a></li>
 								<li><a href="#reviews" data-toggle="tab"> نظرات ({{ comments.count }})</a></li>
 							</ul>
 						</div>
