@@ -1,0 +1,37 @@
+{% load static %}
+
+<div class="col-sm-12 padding-right">
+    <div class="features_items"><!--RetailSale_items-->
+        <h2 class="title text-center">{{ label}}</h2>
+        <div id="new-item-carousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            {% for product_list in products_grouped %}
+                <div class="item {{ forloop.first|yesno:"active," }}">
+                    {% for product in product_list %}
+                        <div class="col-sm-3">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img src="{{ product.image.url}}" alt="{{ product.desc}}" />
+                                        <h2>{{ product.get_price_seperated|last}} تومان </h2>
+                                        <p>{{ product.desc|truncatechars:20}}</p>
+                                        <a href="{{product.get_absolute_url}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>مشاهده</a>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+        </div>
+                <a class="left recommended-item-control" href="#new-item-carousel" data-slide="prev">
+                    <i class="fa fa-angle-left"></i>
+                  </a>
+                  <a class="right recommended-item-control" href="#new-item-carousel" data-slide="next">
+                    <i class="fa fa-angle-right"></i>
+                  </a>
+        </div>
+    </div><!--RetailSale_items-->
+
+</div>

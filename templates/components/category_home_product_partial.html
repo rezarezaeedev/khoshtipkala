@@ -1,0 +1,32 @@
+{% load static %}
+<div class="category-tab"><!--category-tab-->
+    <div class="col-sm-12">
+        <ul class="nav nav-tabs">
+            {% for category in categories %}
+                <li class="{{ forloop.first|yesno:"active," }}"><a href="#Tab_{{ forloop.counter0 }}" data-toggle="tab">{{ category.title}}</a></li>
+            {% endfor %}
+
+        </ul>
+    </div>
+    <div class="tab-content">
+
+        {% for product_list in grouped_products_categories %}
+            <div class="tab-pane fade {{ forloop.first|yesno:"active in," }}" id="Tab_{{ forloop.counter0 }}" >
+                {% for product in product_list %}
+                    <div class="col-sm-3">
+                        <div class="product-image-wrapper">
+                            <div class="single-product">
+                                <div class="productinfo text-center">
+                                    <img src="{{product.image.url}}" alt="{{ product.desc|truncatechars:20 }}" />
+                                    <h2>{{ product.get_price_seperated|last}} تومان </h2>
+                                    <p>{{ product.title }}</p>
+                                    <a href="{{product.get_absolute_url}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>مشاهده</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div><!--/category-tab-->

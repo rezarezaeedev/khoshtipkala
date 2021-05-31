@@ -52,7 +52,8 @@ def product_detail(request, *args, **kwargs): # or...(request, slug):
     commentform = CommentForm(request.POST or None)
     try:
         product = Product.objects.get(objid=objid, active=True)
-        product_id=product.id
+        product.visit_count+=1
+        product.save()
         product_gallery=ProductGallery.objects.filter(product_id=product.id)
         product_gallery=list_grouper(3,product_gallery)
         recomended_products_lookup = ( Q(brand=product.brand) |

@@ -71,7 +71,8 @@ class Product(models.Model):
     active      =   models.BooleanField(default=True, verbose_name='فعال')
     tags        =   models.ManyToManyField(Tag, blank=True, verbose_name='برچسب ها')
     categories  =   models.ManyToManyField(ProductCategory, verbose_name='دسته بندی', blank=True, )
-    timestamp = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    visit_count =   models.IntegerField(verbose_name='تعداد بازدید',default=0)
+    timestamp   = models.DateTimeField(auto_now_add=True,blank=True,null=True)
 
     class Meta:
         verbose_name='کالا'
