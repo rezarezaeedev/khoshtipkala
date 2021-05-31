@@ -13,7 +13,7 @@ def add_user_order(request):
         product_objid   =   orderlistform.cleaned_data.get('product_objid')
         product         =   Product.objects.filter(objid=product_objid).first()
         count           =   orderlistform.cleaned_data.get('count')
-        if product.beExist:
+        if product.beExist == 'True':
             order=Order.objects.filter(owner=user,is_paid=False).last()  # get/create orderlist
             if order is None:
                 order=Order.objects.create(owner=user,is_paid=False)
@@ -83,7 +83,7 @@ def change_count_product_in_open_order(request, **kwargs):
     orderdetail     =       orderdetail.last()
     if orderdetail is not None:
         if mode==1:
-            if orderdetail.product.beExist:
+            if orderdetail.product.beExist=='True':
                 orderdetail.count+=1
                 orderdetail.save()
         elif orderdetail.count<2 or mode==-1:

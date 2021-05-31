@@ -67,7 +67,7 @@ class Product(models.Model):
     price       =   models.DecimalField(decimal_places=0, max_digits=10, validators=[validators.MinValueValidator(10, 'کمترین قیمت 10 هزار تومان میباشد')], verbose_name='قیمت', default=100)
     image       =   models.ImageField(upload_to=upload_image_path, verbose_name='تصویر')
     # slug      =   models.SlugField(unique=True,verbose_name='اسلاگ')
-    beExist     =   models.BooleanField(max_length=10, verbose_name='موجودی', choices=clothesExist.choices, default=clothesExist.exist)
+    beExist     =   models.CharField(max_length=10, verbose_name='موجودی', choices=clothesExist.choices, default=clothesExist.exist)
     active      =   models.BooleanField(default=True, verbose_name='فعال')
     tags        =   models.ManyToManyField(Tag, blank=True, verbose_name='برچسب ها')
     categories  =   models.ManyToManyField(ProductCategory, verbose_name='دسته بندی', blank=True, )

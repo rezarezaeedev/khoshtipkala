@@ -17,7 +17,7 @@
         function submitOrderListForm(){
 
             {% if request.user.is_authenticated %}
-                {% if product.beExist   %}
+                {% if product.beExist  == 'True'  %}
                     if (document.getElementById('id_count').value>=1){
                     document.getElementById('orderlistform').submit();
                     alert('محصول شما با موفقیت به سبد خریدتان اضافه شد☻');

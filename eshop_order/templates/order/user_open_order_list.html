@@ -47,10 +47,17 @@
                     </td>
                     <td class="cart_quantity">
                         <div class="cart_quantity_button">
-                            <a class="cart_quantity_up" href="{% url 'change_count_product_in_open_order' objid=detail.product.objid mode=1 %}"> + </a>
+                            <a class="cart_quantity_up" onclick="addProductToOrder()" href="{% url 'change_count_product_in_open_order' objid=detail.product.objid mode=1 %}"> + </a>
                             <input class="cart_quantity_input" type="text" name="quantity" value="{{ detail.count }}"  disabled autocomplete="off" size="2">
                             <a class="cart_quantity_down" href="{% url 'change_count_product_in_open_order' objid=detail.product.objid mode=0 %}"> - </a>
                         </div>
+                        <script>
+                            function addProductToOrder() {
+                                {%  if not detail.product.beExist == 'True' %}
+                                    alert('محصول موجود نمیباشد')
+                                {% endif %}
+                            }
+                        </script>
                     </td>
                     <td class="cart_total">
                         <p class="cart_total_price">{{ detail.get_total_price|last }}</p>
