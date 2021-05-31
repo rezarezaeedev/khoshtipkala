@@ -15,15 +15,20 @@
 </form>
 <script>
         function submitOrderListForm(){
+
             {% if request.user.is_authenticated %}
-                if (document.getElementById('id_count').value>=1){
+                {% if product.beExist   %}
+                    if (document.getElementById('id_count').value>=1){
                     document.getElementById('orderlistform').submit();
                     alert('محصول شما با موفقیت به سبد خریدتان اضافه شد☻');
-                }
-                else{
-                    alert('تعدا را به درستی وارد کنید!!');
-                    document.getElementById('id_count').value=1;
-                }
+                       }
+                    else{
+                        alert('تعدا را به درستی وارد کنید!!');
+                        document.getElementById('id_count').value=1;
+                    }
+                {% else %}
+                    alert('محصول موجود نمیباشد!!');
+                {% endif %}
             {% else %}
                 alert('برای اضافه کردن به سبد خرید حتما باید وارد سایت شده باشید..!');
             {% endif %}

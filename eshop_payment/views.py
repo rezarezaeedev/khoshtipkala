@@ -34,8 +34,8 @@ def send_payment_request(request,*args,**kwargs):
     total_amount=0
     user=request.user
     orderid=kwargs.get('orderid')
-    openorder=Order.objects.filter(owner=user,is_paid=False).last()
-    if openorder is not None:
+    openorder:Order=Order.objects.filter(owner=user,is_paid=False).last()
+    if openorder is not None and openorder.orderdetail_set.all().count()!=0 :
         total_amount=openorder.get_total_price()[0]
         result = client.service.PaymentRequest(MERCHANT, total_amount, description, email, mobile, f'{CallbackURL}{openorder.id}')
         if result.Status == 100:

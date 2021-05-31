@@ -20,7 +20,7 @@
         </ol>
     </div><!--/breadcrums-->
     <div class="table-responsive cart_info">
-    {% if not openorder is None and detailorder|length > 0 %}
+    {% if  openorder is not None and detailorder|length > 0 %}
         <table class="table table-condensed">
             <thead>
                 <tr class="cart_menu">
