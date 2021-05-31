@@ -15,7 +15,7 @@ amount = 1000  # Toman / Required
 description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # Required
 email = 'email@example.com'  # Optional
 mobile = '09123456789'  # Optional
-CallbackURL = 'http://localhost:8000/payment/verify' # Important: need to edit for realy server.
+CallbackURL = 'http://localhost:8000/payment/verify/' # Important: need to edit for realy server.
 
 def get_currnet_time():
     current_time = datetime.now()
@@ -30,7 +30,8 @@ def send_payment_request(request,*args,**kwargs):
     openorder=Order.objects.filter(owner=user,is_paid=False).last()
     if openorder is not None:
         total_amount=openorder.get_total_price()[0]
-        result = client.service.PaymentRequest(MERCHANT, total_amount, description, email, mobile, f'{CallbackURL}/{openorder.id}')
+        result = client.service.PaymentRequest(MERCHANT, total_amount, description, email, mobile, f'{CallbackURL}{openorder.id}')
+
         if result.Status == 100:
             return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
         else:
@@ -41,24 +42,30 @@ def send_payment_request(request,*args,**kwargs):
 def verify_payment(request, *args, **kwargs):
     user = request.user
     order_id=kwargs.get('order_id')
-
     if request.GET.get('Status') == 'OK':
         result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], amount)
         if result.Status == 100:
             # openorder =Order.objects.filter(owner=user,is_paid=False,id=order_id).last()
             # openorder =Order.objects.filter(id=order_id).last()
-            openorder =Order.objects.filter(owner=user,is_paid=False).last()
-            openorder.is_paid=True
-            openorder.payment_date = get_currnet_time()
-            openorder.ref_id = str(result.RefID)
-            openorder.save()
-            return HttpResponse('Transaction success.\nRefID: ' + str(result.RefID))
+            openorder =Order.objects.filter(owner=user,is_paid=False,id=order_id).last()
+            if openorder is not  None:
+                openorder.is_paid=True
+                openorder.payment_date = get_currnet_time()
+                openorder.ref_id = str(result.RefID)
+                openorder.save()
+                # return HttpResponse('Transaction success.\nRefID: ' + str(result.RefID))
+                return render(request, 'payment_response.html', context={'data': 'پرداخت با موفقیت انجام شد', 'bolddata': ' تبریک ','refid':str(result.RefID)})
+            else:
+                return render(request, 'payment_response.html', context={'data': 'سبد خرید یافت نشد!', 'bolddata': ' خطا: ','refid':str(result.RefID)})
         elif result.Status == 101:
-            return HttpResponse('Transaction submitted : ' + str(result.Status))
+            # return HttpResponse('Transaction submitted : ' + str(result.Status))
+            return render(request, 'payment_response.html', context={'data': 'این پرداخت قبلا انجام شده است', 'bolddata': ' توجه: ','refid':str(result.RefID)})
         else:
-            return HttpResponse('Transaction failed.\nStatus: ' + str(result.Status))
+            # return HttpResponse('Transaction failed.\nStatus: ' + str(result.Status))
+            return render(request, 'payment_response.html', context={'data': 'پرداخت با خطا مواجه شده است!', 'bolddata': ' خطا: ','refid':str(result.RefID)})
     else:
-        return HttpResponse('Transaction failed or canceled by user')
+        # return HttpResponse('Transaction failed or canceled by user')
+        return render(request, 'payment_response.html', context={'data': 'پرداخت توسط کاربر لغو شده است!', 'bolddata': ' پشیمانی: '})
 
 
     # ############################## 4 Test #############################
@@ -81,7 +88,9 @@ def verify_payment(request, *args, **kwargs):
     # ############################## 4 Test #############################
 
 
-
+def test(request):
+    context={'data':'متن تست برای امتحان صفحه نمایش پاسخ درگاه پرداخت','bolddata':' توجه: ','refid':'000098435325 '}
+    return render(request, 'payment_response.html', context)
 
 
 

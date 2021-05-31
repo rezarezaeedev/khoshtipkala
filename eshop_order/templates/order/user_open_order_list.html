@@ -1,6 +1,17 @@
 {% extends 'shared/_MainLayout.html' %}
 {% load static %}
 {% block content %}
+    <style>
+        #producstlistinorderlist{
+        font-size: 15px;
+
+    }
+    #producstlistinorderlist:hover{
+        font-size: 16px;
+        text-shadow: #5897fb 0px 0px 15px;
+
+    }
+    </style>
 <div class="container">
     <div class="breadcrumbs">
         <ol class="breadcrumb">
@@ -122,6 +133,8 @@
         </section>
     {% else %}
         <p class="alert alert-danger">هیچ محصولی در سبد خرید شما وجود ندارد</p>
+        <p  class="" style="display: inline-block" href="{% url 'products' %}">محصولی را برای خرید انتخاب کنید - </p>
+        <a  class="alert-link" id="producstlistinorderlist"    href="{% url 'products' %}">لیست محصولات </a>
         <br><br><br><br><br><br><br>
     {% endif %}
     </div>

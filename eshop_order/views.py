@@ -68,24 +68,29 @@ def user_open_order_list(request):
     return render(request, 'order/user_open_order_list.html', context)
 
 @login_required(login_url='/login')
-def change_count_product_in_open_order(request,objid,mode):
+def change_count_product_in_open_order(request, **kwargs):
+    mode=kwargs.get('mode')
+    objid=kwargs.get('objid')
     user=request.user
-    order=Order.objects.filter(owner=user,is_paid=False).last()
-    orderdetail=order.orderdetail_set.filter(product__objid=objid).last()
     try:
         mode=int(mode)
     except:
         return render(request,'404_error.html')
 
-    if mode==1:
-        if orderdetail.product.beExist:
-            orderdetail.count+=1
+    # order=Order.objects.filter(owner=user,is_paid=False).last()
+    # orderdetail=order.orderdetail_set.filter(product__objid=objid).last()
+    orderdetail     =       OrderDetail.objects.filter(order__owner=user, order__is_paid=False, product__objid=objid)
+    orderdetail     =       orderdetail.last()
+    if orderdetail is not None:
+        if mode==1:
+            if orderdetail.product.beExist:
+                orderdetail.count+=1
+                orderdetail.save()
+        elif orderdetail.count<2 or mode==-1:
+            orderdetail.delete()
+        else:
+            orderdetail.count-=1
             orderdetail.save()
-    elif orderdetail.count<2 or mode==-1:
-        orderdetail.delete()
-    else:
-        orderdetail.count-=1
-        orderdetail.save()
-
-    return redirect(reverse('user-open_order'))
+        return redirect(reverse('user-open_order'))
+    return render(request, '404_error.html')
 
