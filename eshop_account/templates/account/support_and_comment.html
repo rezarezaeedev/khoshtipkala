@@ -1,0 +1,27 @@
+{% extends 'shared/_Main_user_account_Layout.html' %}
+{% load render_partial %}
+{% load static %}
+
+{% block profile %}
+    <style>
+        .supportdiv {
+            padding: 7px;
+            border-radius: 8px;
+        }
+    </style>
+    <div style="overflow: auto;height: 1000px;">
+        {% for contact in contactus %}
+            <hr>
+            <div class="supportdiv">
+                <ul>
+                    <li><a style="color: orange"> <i class="fa fa-user "></i> کاربر: {{ contact.fullname }}</a></li>
+                    <li><h4> {{ contact.subject }}</h4></li>
+                </ul>
+                <pre>{{ contact.text }}</pre>
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+    <br><br>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'shared/_Main_user_account_Layout.html' %}
+{% load render_partial %}
+{% load static %}
+{% block col2 %}
+    <div style="border-radius: 10px;padding: 20px" class="thumbnail">
+        {#                    <img src="" alt="...">#}
+        <i class="fa fa-user fa-5x " style="color: #ea9903"></i>
+        <div class=" ">
+            <h4> {{ user.first_name|truncatechars:5 }} {{ user.last_name|truncatechars:7 }} </h4>
+            <h5> نام کاربری: <a href="{% url 'edit' %}" role="button">{{ user.username|truncatechars:8 }}</a></h5>
+            <p><strong>خلاصه:</strong> لورم ایپسوم با تولید متن ساختگی</p>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block profile %}
+    <div class="col-md-10">
+        <p class=" ">درصد تکامل پروفایل شما</p>
+        <div class="progress">
+            <div class="progress-bar {% if point < 30 %}progress-bar-danger{% elif point <= 59 %}progress-bar-warning{% elif point < 80 %}progress-bar-info{% else %}progress-bar-success{% endif %}"
+                 role="progressbar" aria-valuenow="{{ point }}" aria-valuemin="0" aria-valuemax="100"
+                 style="width: {{ point }}%;">
+                {{ point }}%
+            </div>
+        </div>
+        {% if username %}
+            <p><a href="{% url 'edit' %}" class=" btn-link">نام کاربری زشت است</a></p>
+        {% endif %}
+
+        {% if email %}
+            <p><a href="{% url 'edit' %}" class=" btn-link">ایمیل خود را وارد نکرده اید</a></p>
+        {% endif %}
+
+        {% if first_name %}
+            <p><a href="{% url 'edit' %}" class=" btn-link">نام خود را بنویسید</a></p>
+        {% endif %}
+        {% if last_name %}
+            <p><a href="{% url 'edit' %}" class=" btn-link">نام خانوادگی خود را بنویسید</a></p>
+        {% endif %}
+        {% if phone %}
+            <p><a href="{% url 'edit' %}" class=" btn-link">تلفن همراه خود را بنویسید</a></p>
+        {% endif %}
+    </div>
+{% endblock %}

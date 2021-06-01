@@ -1,7 +1,18 @@
+import itertools
+
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
 from django.contrib.auth import login,logout,authenticate,get_user_model
+
+from eshop_contacts.forms import ContactForm
+from eshop_contacts.models import ContactUs
 from .forms import *
 from django.contrib.auth.models import User # or: User=get_user_model()
+
+# get grouped list ,for gallery or recomended products
+def list_grouper(n, iterable):
+    args = [iter(iterable)] * n
+    return list(([e for e in t if e != None] for t in itertools.zip_longest(*args)))
 
 def login_user(request):
     if request.user.is_authenticated:
@@ -40,5 +51,82 @@ def logout_user(request):
     if request.user.is_authenticated:
         logout(request)
         return redirect('/')
+
+@login_required(login_url='/login')
+def user_account_main(request):
+    user=request.user
+
+    context = {
+        'point':0,
+        'user':user
+    }
+    if 1:
+        if user.username != '':
+            context['point'] += 20
+        else:
+            context['username'] = 1
+        if user.email != '':
+            context['point'] += 20
+        else:
+            context['email'] =1
+        if user.first_name != '':
+            context['point'] += 20
+        else:
+            context['first_name'] = 1
+        if user.last_name != '':
+            context['point'] += 20
+        else:
+            context['last_name'] = 1
+        if 'phone' == '':
+            context['point'] += 20
+        else:
+            context['phone'] = 1
+        # # context['point'] = 100 # for test
+    return render(request, 'account/account_profile.html', context)
+
+
+@login_required(login_url='/login')
+def edit_profile_user(request):
+    user = request.user
+    username=user.username
+    first_name=user.first_name
+    last_name=user.last_name
+    email=user.email
+    edituserdataform=EditUserDataForm(request.POST or None, initial={'username':username,'first_name':first_name,'last_name':last_name,'email':email})
+
+    context = {
+        'edituserdataform': edituserdataform
+
+    }
+
+    if edituserdataform.is_valid():
+        user.first_name = edituserdataform.cleaned_data.get('first_name')
+        user.last_name = edituserdataform.cleaned_data.get('last_name')
+        user.email = edituserdataform.cleaned_data.get('email')
+        user.save()
+        context['submitstatus']=1
+
+
+    return render(request, 'account/edit_account_profile.html', context)
+
+
+def panel_profile_partial(request):
+    context = {
+
+    }
+    return render(request, 'components/account_panel_partial.html', context)
+
+def support(request):
+    user=request.user
+    contactus=user.contactus_set.all().order_by('-id')
+
+    context={
+        'contactus': contactus
+    }
+
+    return render(request, 'account/support_and_comment.html', context=context)
+
+
+
 
 

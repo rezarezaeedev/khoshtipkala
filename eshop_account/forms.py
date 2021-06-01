@@ -99,3 +99,44 @@ class registerForm(forms.Form):
         if len(password)<8 or len(password)>=20:
             raise forms.ValidationError('رمز عبور باید حداقل 8 کاراکتر و حداکثر 20 کاراکتر باشد')
         return password
+
+
+class EditUserDataForm(forms.Form):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'placeholder':'نام کاربری جدید را انتخاب کنید','maxlength':'20','minlength':'2','class':'form-control'},
+        ),
+        label='نام کاربری',
+        required=True,disabled=True,
+    )
+
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'placeholder':'نام خود را انتخاب کنید','maxlength':'20','minlength':'2','class':'form-control '},
+        ),
+        label='نام',
+        required=True,
+    )
+
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'placeholder':'نام خانوادگی را انتخاب کنید','maxlength':'20','minlength':'2','class':'form-control '},
+        ),
+        label='نام خانوادگی',
+        required=True,
+    )
+
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={'placeholder':'پست الکترونیک خود را انتخاب کنید','class':'form-control'},
+        ),
+        label='پست الکترونیک',
+        required=True,
+    )
+
+
+
+
+
+
+
