@@ -107,7 +107,7 @@ class EditUserDataForm(forms.Form):
             attrs={'placeholder':'نام کاربری جدید را انتخاب کنید','maxlength':'20','minlength':'2','class':'form-control'},
         ),
         label='نام کاربری',
-        required=True,disabled=True,
+        required=False,
     )
 
     first_name = forms.CharField(
@@ -134,9 +134,15 @@ class EditUserDataForm(forms.Form):
         required=True,
     )
 
+    def clean_username(self):
+        username=self.cleaned_data.get('username').strip()
+        if username is '':
+            raise forms.ValidationError('نمیتواند خالی باشد')
+        return username
 
 
-
-
-
-
+    def clean_email(self):
+        email=self.cleaned_data.get('email').strip()
+        if email is '':
+            raise forms.ValidationError('نمیتواند خالی باشد')
+        return email

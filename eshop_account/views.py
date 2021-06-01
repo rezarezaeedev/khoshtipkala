@@ -88,23 +88,29 @@ def user_account_main(request):
 @login_required(login_url='/login')
 def edit_profile_user(request):
     user = request.user
-    username=user.username
-    first_name=user.first_name
-    last_name=user.last_name
-    email=user.email
-    edituserdataform=EditUserDataForm(request.POST or None, initial={'username':username,'first_name':first_name,'last_name':last_name,'email':email})
+    edituserdataform=EditUserDataForm(request.POST or None, initial={'username':user.username,'first_name':user.first_name,'last_name':user.last_name,'email':user.email })
 
     context = {
-        'edituserdataform': edituserdataform
+        'edituserdataform': edituserdataform,
+        'submitstatus':0
 
     }
 
     if edituserdataform.is_valid():
-        user.first_name = edituserdataform.cleaned_data.get('first_name')
-        user.last_name = edituserdataform.cleaned_data.get('last_name')
-        user.email = edituserdataform.cleaned_data.get('email')
-        user.save()
-        context['submitstatus']=1
+        username = edituserdataform.cleaned_data.get('username')
+        email    = edituserdataform.cleaned_data.get('email')
+        if User.objects.filter(username=username).exclude(id=user.id).exists():
+            context['submitstatus']=-1
+        elif User.objects.filter(email=email).exclude(id=user.id).exists():
+            context['submitstatus']=-2
+        else:
+            user.username = username
+            user.first_name = edituserdataform.cleaned_data.get('first_name')
+            user.last_name = edituserdataform.cleaned_data.get('last_name')
+            user.email = email
+            user.save()
+            context['submitstatus']=1
+
 
 
     return render(request, 'account/edit_account_profile.html', context)

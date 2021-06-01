@@ -39,9 +39,15 @@
             <div class="form-group col-md-12">
                 <input onclick="EditProfilesubmiter()" type="submit" style="color: white" class="btn btn-warning"
                        value="ارسـال">
-                {% if submitstatus %}
+                {% if submitstatus == 1 %}
                     <p style="display: inline-block;font-size: 15px;font-weight: bold;margin-right: 5px"
                        class="text-success">اطلاعات با موفقیت ثبت شد</p>
+                {% elif submitstatus == -1 %}
+                    <p style="display: inline-block;font-size: 15px;font-weight: bold;margin-right: 5px"
+                       class="text-danger">نام کاربری تکراری میباشد</p>
+                {% elif submitstatus == -2 %}
+                    <p style="display: inline-block;font-size: 15px;font-weight: bold;margin-right: 5px"
+                       class="text-danger">ایمیل تکراری میباشد</p>
                 {% endif %}
             </div>
             <script>
