@@ -25,7 +25,7 @@ def add_user_order(request):
                 orderdetail.count+=count
                 orderdetail.save()
         return redirect(reverse('productdetail',args=[product.objid,product.title.replace(' ','-')]))
-    return render(request, '404_error.html')
+    return redirect('404-error')
 
 # # @login_required
 # def add_user_order(request):
@@ -75,7 +75,7 @@ def change_count_product_in_open_order(request, **kwargs):
     try:
         mode=int(mode)
     except:
-        return render(request,'404_error.html')
+        return redirect('404-error')
 
     # order=Order.objects.filter(owner=user,is_paid=False).last()
     # orderdetail=order.orderdetail_set.filter(product__objid=objid).last()
@@ -92,5 +92,5 @@ def change_count_product_in_open_order(request, **kwargs):
             orderdetail.count-=1
             orderdetail.save()
         return redirect(reverse('user-open_order'))
-    return render(request, '404_error.html')
+    return redirect('404-error')
 

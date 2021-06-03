@@ -22,16 +22,17 @@ from .views import *
 
 urlpatterns = [
     path('', home, name='home'),
+    path('', include('eshop_order.urls')),
     path('', include('eshop_account.urls')),
     path('', include('eshop_products.urls')),
     path('', include('eshop_contacts.urls')),
-    path('', include('eshop_order.urls')),
+    path('404-error', not_fount_404_error, name='404-error'),
     path('payment/', include('eshop_payment.urls',namespace='payment')),
-    path('most_visited_product_partial', most_visited_product_partial, name='most-visited-product-partial'),
     path('latest-product-partial', latest_product_partial, name='latest-product-partial'),
+    path('most_visited_product_partial', most_visited_product_partial, name='most-visited-product-partial'),
     path('category-home-product-partial', category_home_product_partial, name='category-home-product-partial'),
-    path('header', header, name='header'),
     path('about', about, name='about'),
+    path('header', header, name='header'),
     path('footer', footer, name='footer'),
     path('admin/', admin.site.urls),
 ]

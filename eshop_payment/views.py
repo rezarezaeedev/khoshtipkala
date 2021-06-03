@@ -42,7 +42,7 @@ def send_payment_request(request,*args,**kwargs):
             return redirect(startpayURL + str(result.Authority))
         else:
             # return HttpResponse('Error code: ' + str(result.Status))
-            return render(request,'404_error.html',context={'errorcode':result.Status})
+            return redirect('404-error')
 
 
 def verify_payment(request, *args, **kwargs):

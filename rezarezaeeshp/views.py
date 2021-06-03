@@ -72,7 +72,13 @@ def category_home_product_partial(request):
     return render(request, 'components/category_home_product_partial.html',context)
 
 
+def not_fount_404_error(request):
+    sitesetting=SiteSetting.objects.filter(active=True).last()
+    context = {
+        'sitesetting':sitesetting,
+    }
 
+    return render(request, '404_error.html', context=context)
 
 
 

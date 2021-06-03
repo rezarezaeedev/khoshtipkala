@@ -1,8 +1,7 @@
 import itertools
 
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 
 from eshop_order.forms import OrderForm
@@ -69,9 +68,9 @@ def product_detail(request, *args, **kwargs):  # or...(request, slug):
         comments = CommentProduct.objects.filter(product_id=product.id)
 
     except Product.DoesNotExist:
-        return render(request, '404_error.html')
+        return redirect('/404-error')
     except:
-        return Http404('--Bad error')
+        return redirect('/404-error')
 
     orderdetailform = OrderForm(request.POST or None, initial={'product_objid': objid})
     favoriteform = FavoriteForm(request.POST or None, initial={'product_objid': objid})

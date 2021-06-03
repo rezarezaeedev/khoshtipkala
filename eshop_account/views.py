@@ -127,11 +127,10 @@ def support(request):
     contactus=user.contactus_set.all().order_by('-id')
 
     context={
-        'contactus': contactus
+        'contactus': contactus,
     }
 
     return render(request, 'account/support_and_comment.html', context=context)
-
 
 
 
