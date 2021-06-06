@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 from eshop_products_category.models import ProductCategory
 from .utils import *
 from eshop_sitesetting.models import SiteSetting
@@ -43,7 +42,6 @@ def most_visited_product_partial(request):
     }
     return render(request, 'components/most_visit_product_partial.html', context)
 
-
 def latest_product_partial(request):
     products=Product.objects.filter(active=True).order_by('-timestamp')[:10]
     context={
@@ -51,7 +49,6 @@ def latest_product_partial(request):
         'label':'آخرین محصولات'
     }
     return render(request, 'components/latest_home_product_partial.html', context)
-
 
 def category_home_product_partial(request):
     categories=ProductCategory.objects.all()
@@ -71,8 +68,7 @@ def category_home_product_partial(request):
 
     return render(request, 'components/category_home_product_partial.html',context)
 
-
-def not_fount_404_error(request):
+def not_fount_404_error(request,*args, **kwargs): # (request, exception)
     sitesetting=SiteSetting.objects.filter(active=True).last()
     context = {
         'sitesetting':sitesetting,

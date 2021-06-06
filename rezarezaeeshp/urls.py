@@ -37,6 +37,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
+handler404 = 'rezarezaeeshp.views.not_fount_404_error'
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) #add static files path to urls
