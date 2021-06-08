@@ -2,7 +2,10 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core import validators
 
-class loginForm(forms.Form):
+from utilities.Google_reCaptcha import reCaptchaV2
+
+
+class loginForm(reCaptchaV2,forms.Form):
     username=forms.CharField(
         widget=forms.TextInput(
             attrs={'placeholder':'نام کابری'}
@@ -25,7 +28,7 @@ class loginForm(forms.Form):
             raise forms.ValidationError('نام کاربری وارد شده اشتباه میباشد')
         return username
 
-class registerForm(forms.Form):
+class registerForm(reCaptchaV2,forms.Form):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={'placeholder':'نام کاربری خود را انتخاب کنید','maxlength':'20','minlength':'4'},
@@ -136,13 +139,13 @@ class EditUserDataForm(forms.Form):
 
     def clean_username(self):
         username=self.cleaned_data.get('username').strip()
-        if username is '':
+        if username == '':
             raise forms.ValidationError('نمیتواند خالی باشد')
         return username
 
 
     def clean_email(self):
         email=self.cleaned_data.get('email').strip()
-        if email is '':
+        if email == '':
             raise forms.ValidationError('نمیتواند خالی باشد')
         return email

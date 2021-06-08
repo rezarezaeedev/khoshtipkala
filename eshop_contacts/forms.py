@@ -1,8 +1,12 @@
 from django import forms
 from django.core import validators
+from captcha.fields import ReCaptchaField,ReCaptchaV3, ReCaptchaV2Checkbox
+
+from utilities.Google_reCaptcha import reCaptchaV2,reCaptchaV3Form
 
 
-class  ContactForm(forms.Form):
+class ContactForm(reCaptchaV2, forms.Form):
+
     fullname=forms.CharField(
         widget=forms.TextInput(
             attrs={'placeholder':'نام و نام خانوادگی','class':'form-control'}

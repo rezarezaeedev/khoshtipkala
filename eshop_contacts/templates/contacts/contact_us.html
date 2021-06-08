@@ -18,6 +18,7 @@
 	    				<div class="status alert alert-success" style="display: none"></div>
 				    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
                             {% csrf_token %}
+
 				            <div class="form-group col-md-6">
                                 {{contactform.fullname}}
                                 {% for error in contactform.fullname.errors %}
@@ -43,8 +44,10 @@
                                     <p class="text-danger">{{ error }}</p>
                                 {% endfor %}
 				            </div>
+
 				            <div class="form-group col-md-12">
-				                <input   onclick="submiter()" class="btn btn-primary pull-right" value="ارسـال">
+				                <input onclick="submiter()" class="btn btn-primary pull-right" value="ارسـال"  >
+                            <br><br>{{ contactform.captcha }}<br><br><br><br>
                                 <script>
                                     function submiter(){
                                         {% if request.user.is_authenticated %}
@@ -56,6 +59,8 @@
                                     }
                                 </script>
 				            </div>
+                            <br>
+
 				        </form>
 	    			</div>
 	    		</div>
