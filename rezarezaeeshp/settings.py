@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'eshop_seller',
     'eshop_sitesetting',
     'eshop_order',
-    'eshop_payment'
+    'eshop_payment',
 ]
 
 MIDDLEWARE = [

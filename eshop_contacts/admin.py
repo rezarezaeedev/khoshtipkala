@@ -11,4 +11,15 @@ class ContactUsAdmin(admin.ModelAdmin):
     class Meta:
         model = ContactUs
 
+class NewslettersEmailAdmin(admin.ModelAdmin):
+    list_display = [ 'email',   'active'   ,'is_deleted' ]
+    list_display_links = [ 'email',  'active'   ,'is_deleted' ]
+    list_filter = [  'is_deleted', 'active']
+    search_fields = ['email'  ]
+
+    class Meta:
+        model = NewslettersEmail
+
 admin.site.register(ContactUs,ContactUsAdmin)
+
+admin.site.register(NewslettersEmail,NewslettersEmailAdmin)

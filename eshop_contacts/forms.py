@@ -2,10 +2,10 @@ from django import forms
 from django.core import validators
 from captcha.fields import ReCaptchaField,ReCaptchaV3, ReCaptchaV2Checkbox
 
-from utilities.Google_reCaptcha import reCaptchaV2,reCaptchaV3Form
+from utilities.Google_reCaptcha import reCaptchaV2Form,reCaptchaV3Form
 
 
-class ContactForm(reCaptchaV2, forms.Form):
+class ContactForm(reCaptchaV2Form, forms.Form):
 
     fullname=forms.CharField(
         widget=forms.TextInput(
@@ -39,7 +39,14 @@ class ContactForm(reCaptchaV2, forms.Form):
         validators=[validators.MaxLengthValidator(600,'متن پیام شما نمیتواند بیشتر از 600 حرف باشد')]
     )
 
+class NewslettersEmailForm(reCaptchaV3Form,forms.Form ):
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={'placeholder': 'آدرس ایمیـل شما ...' }
+        ),
+        label='',
 
+    )
 
 
 

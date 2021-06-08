@@ -33,7 +33,7 @@ urlpatterns = [
     path('category-home-product-partial', category_home_product_partial, name='category-home-product-partial'),
     path('about', about, name='about'),
     path('header', header, name='header'),
-    path('footer', footer, name='footer'),
+    # path('footer', footer, name='footer'),
     path('admin/', admin.site.urls),
 ]
 

@@ -2,10 +2,10 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core import validators
 
-from utilities.Google_reCaptcha import reCaptchaV2
+from utilities.Google_reCaptcha import reCaptchaV2Form
 
 
-class loginForm(reCaptchaV2,forms.Form):
+class loginForm(reCaptchaV2Form,forms.Form):
     username=forms.CharField(
         widget=forms.TextInput(
             attrs={'placeholder':'نام کابری'}
@@ -28,7 +28,7 @@ class loginForm(reCaptchaV2,forms.Form):
             raise forms.ValidationError('نام کاربری وارد شده اشتباه میباشد')
         return username
 
-class registerForm(reCaptchaV2,forms.Form):
+class registerForm(reCaptchaV2Form,forms.Form):
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={'placeholder':'نام کاربری خود را انتخاب کنید','maxlength':'20','minlength':'4'},

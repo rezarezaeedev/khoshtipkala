@@ -8,7 +8,7 @@ class ContactUs(models.Model):
     subject   =     models.CharField(max_length=200,verbose_name='موضوع')
     text      =     models.TextField(max_length=1000,verbose_name='متن پیام')
     is_read   =     models.BooleanField(default=False,verbose_name='خوانده شده/نشده')
-    active   =     models.BooleanField(default=True,verbose_name='فعال/غیر فعال')
+    active    =     models.BooleanField(default=True,verbose_name='فعال/غیر فعال')
 
     class Meta:
         verbose_name='تماس باما'
@@ -18,8 +18,17 @@ class ContactUs(models.Model):
         return self.subject[:10]
 
 
+class NewslettersEmail(models.Model):
+    email         =     models.EmailField(max_length=50,verbose_name='ایمیل')
+    is_deleted    =     models.BooleanField(default=False,verbose_name='حذف شده/موجود')
+    active        =     models.BooleanField(default=True,verbose_name='فعال/غیر فعال')
 
+    class Meta:
+        verbose_name='ایمیل'
+        verbose_name_plural='ایمیل های خبرنامه'
 
+    def __str__(self):
+        return self.email
 
 
 

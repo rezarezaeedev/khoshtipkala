@@ -1,5 +1,5 @@
 import itertools
-
+import re
 from django.utils.text import slugify
 import random
 import string
@@ -49,6 +49,9 @@ def get_seo_url(url,char='-',oldchar=' '):
     return url.replace(oldchar, char)
 
 
+def email_checker(email):
+    email_result = re.match(r'^([0-9a-z])[0-9a-z_.-]{2,40}([0-9a-z])(@gmail\.com)$', from_email, flags=re.I | re.M)
+    return bool(email_result)
 
 
 
