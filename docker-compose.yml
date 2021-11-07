@@ -1,11 +1,11 @@
 services:
   app:
-    build: .
-    command: sh -c "python manage.py migrate && gunicorn A.wsgi -b 0.0.0.0:8000"
+    build: . 
+    command: sh -c "python manage.py migrate && gunicorn rezarezaeeshp.wsgi -b 0.0.0.0:8000"
     container_name: app
     volumes:
       - .:/code/
-      - ./static_cdn:/code/static_cdn
+      - ./static:/code/static
     ports:
       - "8000:8000"
     networks:
@@ -25,7 +25,7 @@ services:
     restart: always
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./static_cdn:/static/
+      - ./static:/static
 
 networks:
   main:
