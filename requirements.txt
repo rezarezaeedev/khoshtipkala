@@ -6,7 +6,6 @@ charset-normalizer==2.0.7
 Django==3.1.1
 django-recaptcha==2.0.6
 django-render-partial==0.4
-gunicorn==20.1.0
 idna==3.3
 isodate==0.6.0
 lxml==4.6.4

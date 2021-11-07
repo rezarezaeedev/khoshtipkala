@@ -131,9 +131,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 # Set Static files directories
-#STATICFILES_DIRS = [
-#    BASE_DIR / "assets",
-#]
+STATICFILES_DIRS = [
+   BASE_DIR / "assets",
+]
 
 # Static files config
 STATIC_URL = '/static/'
